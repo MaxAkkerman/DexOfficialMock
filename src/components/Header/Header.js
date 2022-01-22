@@ -72,50 +72,6 @@ export default function Header() {
             >
               Pool Explorer
             </NavLink>
-            <NavLink
-              id="nav-wallet"
-              to="/wallet"
-              className={
-                linkIsActive('/wallet')
-                  ? 'header-link header-link--active'
-                  : 'header-link'
-              }
-            >
-              Assets
-            </NavLink>
-            <NavLink
-              id="nav-stacking"
-              to="/staking"
-              className={
-                linkIsActive('/staking')
-                  ? 'header-link header-link--active'
-                  : 'header-link'
-              }
-            >
-              Staking
-            </NavLink>
-            <NavLink
-              id="nav-bridge"
-              to="/bridge"
-              className={
-                linkIsActive('/bridge')
-                  ? 'header-link header-link--active'
-                  : 'header-link'
-              }
-            >
-              Bridge
-            </NavLink>
-            <NavLink
-              id="nav-farming"
-              to="/farming"
-              className={
-                linkIsActive('/farming')
-                  ? 'header-link header-link--active'
-                  : 'header-link'
-              }
-            >
-              Farming
-            </NavLink>
           </div>
         </div>
         <div className="header-wrap">
