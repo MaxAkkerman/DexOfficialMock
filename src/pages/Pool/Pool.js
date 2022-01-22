@@ -50,7 +50,9 @@ function Pool() {
         class={'pool'}
         title="Liquidity pools"
         button={
+          
           <Link
+            to="/"
             onClick={walletIsConnected ? () => handleClickCreatePair() : null}
             className={`btn liquidity-btn ${
               walletIsConnected ? null : 'btn--disabled'
