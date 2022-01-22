@@ -1,0 +1,27 @@
+.orders__price_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 8%;
+
+  @media screen and (max-width: 1025px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.set_market_btn {
+  height: 45px;
+  min-width: 179px;
+  display: flex;
+  box-shadow: 0px 14px 44px rgba(69, 88, 255, 0.23);
+  border-radius: 11px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.input {
+  margin-top: 40px;
+}

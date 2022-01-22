@@ -1,0 +1,11 @@
+.close {
+  cursor: pointer;
+
+  path {
+    fill: var(--icons-color);
+  }
+
+  @media screen and (max-width: 1025px) {
+    transform: scale(0.6);
+  }
+}
