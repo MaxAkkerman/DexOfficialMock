@@ -5,7 +5,7 @@ import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import Alert from './components-v2/Alert';
 
@@ -14,7 +14,7 @@ import { reduxStore } from './lib/redux';
 
 ReactDOM.render(
   <Provider store={reduxStore}>
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <Router basename={process.env.NODE_ENV === "development" ? "" : process.env.PUBLIC_URL} >
       <StyledEngineProvider injectFirst>
         <SnackbarProvider
           maxSnack={3}
@@ -32,7 +32,7 @@ ReactDOM.render(
           </React.StrictMode>
         </SnackbarProvider>
       </StyledEngineProvider>
-    </BrowserRouter>
+    </Router>
   </Provider>,
   document.getElementById('root'),
 );
