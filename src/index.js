@@ -14,7 +14,7 @@ import { reduxStore } from './lib/redux';
 
 ReactDOM.render(
   <Provider store={reduxStore}>
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <StyledEngineProvider injectFirst>
         <SnackbarProvider
           maxSnack={3}
