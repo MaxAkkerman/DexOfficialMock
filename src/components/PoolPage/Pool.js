@@ -4,8 +4,8 @@ import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-import LiquidityItem from '../../components/LiquidityItem/LiquidityItem';
-import MainBlock from '../../components/MainBlock';
+import LiquidityItem from '../LiquidityItem/LiquidityItem';
+import MainBlock from '../MainBlock';
 
 function Pool() {
   const navigate = useNavigate();

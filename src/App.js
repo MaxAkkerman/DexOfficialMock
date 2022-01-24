@@ -16,8 +16,8 @@ import {
 import Header from './components/Header/Header';
 import NativeLogin from './components/NativeLogin/NativeLogin';
 import PoolExplorer from './components/PoolExplorer/PoolExplorer';
-import AddLiquidity from './pages/AddLiquidity/AddLiquidity';
-import Pool from './pages/Pool/Pool';
+import AddLiquidity from './components/AddLiquidityPage/AddLiquidity';
+import Pool from './components/PoolPage/Pool';
 import {
   getAllPairsAndSetToStore,
   getAllTokensAndSetToStore,
