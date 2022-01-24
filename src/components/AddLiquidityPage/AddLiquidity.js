@@ -16,7 +16,6 @@ import {
   NOT_ENOUGH_CAUSE_COMMISSION as NOT_ENOUGH_CAUSE_COMMISSION_MSG,
   NOT_TOUCHED,
 } from '../../constants/validationMessages';
-import useAssetList from '../../hooks/useAssetList';
 import {
   getDecimals,
   getFraction,
@@ -33,7 +32,8 @@ function AddLiquidity() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { assetList } = useAssetList();
+  // TODO: replace with something real
+  const assetList = [];
 
   const walletIsConnected = useSelector(
     (state) => state.appReducer.walletIsConnected,
