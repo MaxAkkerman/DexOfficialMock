@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 
 import chrome from '../../images/icons/chrome.svg';
 import { hidePopup } from '../../store/actions/app';
-import CloseBtn from '../CloseBtn/CloseBtn';
-import MainBlock from '../MainBlock/MainBlock';
+import CloseBtn from '../CloseBtn';
+import MainBlock from '../MainBlock';
 
 function Popup(props) {
   const dispatch = useDispatch();

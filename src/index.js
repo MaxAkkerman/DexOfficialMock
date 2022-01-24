@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import Alert from './components-v2/Alert';
+import Alert from './components/Alert';
 
 import App from './App';
 import { reduxStore } from './lib/redux';

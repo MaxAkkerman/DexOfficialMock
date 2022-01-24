@@ -9,7 +9,7 @@ import {
 import { iconGenerator } from '../../iconGenerator';
 import { setTips } from '../../store/actions/app';
 import { setPoolAsyncIsWaiting } from '../../store/actions/pool';
-import MainBlock from '../MainBlock/MainBlock';
+import MainBlock from '../MainBlock';
 
 function PoolConfirmPopup(props) {
   const dispatch = useDispatch();

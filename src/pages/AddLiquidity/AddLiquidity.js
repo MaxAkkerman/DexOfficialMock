@@ -5,10 +5,10 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
-import Input from '../../components/Input/Input';
-import MainBlock from '../../components/MainBlock/MainBlock';
+import Input from '../../components/Input';
+import MainBlock from '../../components/MainBlock';
 import PoolConfirmPopup from '../../components/PoolConfirmPopup/PoolConfirmPopup';
-import WaitingPopup from '../../components/WaitingPopup/WaitingPopup';
+import WaitingPopup from '../../components/WaitingPopup';
 import { PROVIDE_LIQUIDITY_COMMISSION } from '../../constants/commissions';
 import {
   NOT_ENOUGH,

@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes, useLocation, } from 'react-router-dom';
 import { useMount } from 'react-use';
 
-import SwapConfirmPopup from './components-v2/SwapConfirmPopup';
-import SwapPage from './components-v2/SwapPage';
-import WaitingPopup from './components-v2/WaitingPopup';
+import SwapConfirmPopup from './components/SwapConfirmPopup';
+import SwapPage from './components/SwapPage';
+import WaitingPopup from './components/WaitingPopup';
 import {
   requestPairsFetch,
   requestTokensFetch,
@@ -16,10 +16,6 @@ import {
 import Header from './components/Header/Header';
 import NativeLogin from './components/NativeLogin/NativeLogin';
 import PoolExplorer from './components/PoolExplorer/PoolExplorer';
-import Popup from './components/Popup/Popup';
-import RevealSeedPhrase from './components/RevealSeedPhrase/RevealSeedPhrase';
-import KeysBlock from './components/WalletSettings/KeysBlock';
-import WalletSettings from './components/WalletSettings/WalletSettings';
 import AddLiquidity from './pages/AddLiquidity/AddLiquidity';
 import Pool from './pages/Pool/Pool';
 import {
@@ -206,24 +202,7 @@ function App() {
         <Route path="/pool" element={<Pool />} />
         <Route path="/swap" element={<SwapPage />} />
         <Route path="/add-liquidity" element={<AddLiquidity />} />
-
-        {walletIsConnected ? (
-          <>
-            <Route path="/wallet/settings/keys" element={<KeysBlock />} />
-            <Route path="/wallet/settings" element={<WalletSettings />} />
-          </>
-        ) : null}
-        {!walletIsConnected && clientData.address && !clientData.status ? (
-          <>
-            <Route path="/wallet/settings/keys" element={<KeysBlock />} />
-            <Route path="/wallet/settings" element={<WalletSettings />} />
-          </>
-        ) : null}
       </Routes>
-      {popup.isVisible ? (
-        <Popup type={popup.type} message={popup.message} link={popup.link} />
-      ) : null}
-      {revealSeedPhraseIsVisible ? <RevealSeedPhrase /> : null}
       <SwapConfirmPopup />
       <WaitingPopup />
     </>

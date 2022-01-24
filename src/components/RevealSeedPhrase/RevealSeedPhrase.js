@@ -15,8 +15,8 @@ import { useMount } from 'react-use';
 
 import { copyToClipboard } from '../../reactUtils/reactUtils';
 import { hideRevealSeedPhrase } from '../../store/actions/enterSeedPhrase';
-import CloseBtn from '../CloseBtn/CloseBtn';
-import MainBlock from '../MainBlock/MainBlock';
+import CloseBtn from '../CloseBtn';
+import MainBlock from '../MainBlock';
 
 function RevealSeedPhrase() {
   const dispatch = useDispatch();

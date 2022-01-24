@@ -11,9 +11,8 @@ import {
   YAxis,
 } from 'recharts';
 
-import Loader from '../Loader/Loader';
-import MainBlock from '../MainBlock/MainBlock';
-import SearchInput from '../SearchInput/SearchInput';
+import Loader from '../Loader';
+import SearchInput from '../SearchInput';
 import styles from './PoolExplorer.module.scss';
 import PoolExplorerItem from './PoolExplorerItem/PoolExplorerItem';
 
