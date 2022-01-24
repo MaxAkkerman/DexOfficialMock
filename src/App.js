@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes, useLocation, } from 'react-router-dom';
 import { useMount } from 'react-use';
 
-import LimitOrderConfirmPopup from './components-v2/LimitOrderConfirmPopup';
-import LimitOrderPage from './components-v2/LimitOrderPage';
 import SwapConfirmPopup from './components-v2/SwapConfirmPopup';
 import SwapPage from './components-v2/SwapPage';
 import WaitingPopup from './components-v2/WaitingPopup';
@@ -208,7 +206,6 @@ function App() {
         <Route path="/pool" element={<Pool />} />
         <Route path="/swap" element={<SwapPage />} />
         <Route path="/add-liquidity" element={<AddLiquidity />} />
-        <Route path="/orders" element={<LimitOrderPage />} />
 
         {walletIsConnected ? (
           <>
@@ -228,7 +225,6 @@ function App() {
       ) : null}
       {revealSeedPhraseIsVisible ? <RevealSeedPhrase /> : null}
       <SwapConfirmPopup />
-      <LimitOrderConfirmPopup />
       <WaitingPopup />
     </>
   );

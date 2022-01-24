@@ -42,14 +42,6 @@ export default function Header() {
               Swap
             </NavLink>
             <NavLink
-              id="nav-limit-order"
-              to="/orders"
-              className="header-link"
-              activeClassName="header-link--active"
-            >
-              Limit orders
-            </NavLink>
-            <NavLink
               id="nav-provide-liquidity"
               to="/pool"
               className={
