@@ -3,6 +3,9 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  width: 100%;
+  max-width: 649px;
+  position: relative;
 }
 
 .mainblock {
@@ -11,11 +14,7 @@
   border-radius: 50px;
   background-color: var(--mainblock-bg-color);
   border: 1px solid var(--mainblock-border-color);
-
   width: 100%;
-  max-width: 649px;
-  position: relative;
-  // margin: 0 30px;
 
   &-header {
     display: flex;
@@ -120,7 +119,7 @@
     }
 
     &-btn {
-      font-family: 'Gilroy', sans-serif;
+      font-family: "Gilroy", sans-serif;
       background-color: transparent;
       font-size: 20px;
       color: var(--icons-color);

@@ -1,4 +1,4 @@
-import { HIDE_DEPLOY_POPUP, SHOW_DEPLOY_POPUP } from '@/store/actions/types';
+import { HIDE_DEPLOY_POPUP, SHOW_DEPLOY_POPUP } from "./types";
 
 export function showDeployPopup() {
   return {

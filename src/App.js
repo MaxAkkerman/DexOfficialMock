@@ -1,39 +1,40 @@
-import { useSnackbar } from 'notistack';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Route, Routes, useLocation, } from 'react-router-dom';
-import { useMount } from 'react-use';
+import { useSnackbar } from "notistack";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { useMount } from "react-use";
 
-import SwapConfirmPopup from './components/SwapConfirmPopup';
-import SwapPage from './components/SwapPage';
-import WaitingPopup from './components/WaitingPopup';
+import SwapConfirmPopup from "./components/SwapConfirmPopup";
+import SwapPage from "./components/SwapPage";
+import WaitingPopup from "./components/WaitingPopup";
 import {
   requestPairsFetch,
   requestTokensFetch,
   updateTonContext,
-} from './store/actions/ton';
+} from "./store/actions/ton";
 
-import Header from './components/Header/Header';
-import NativeLogin from './components/NativeLogin/NativeLogin';
-import PoolExplorer from './components/PoolExplorer/PoolExplorer';
-import AddLiquidity from './components/AddLiquidityPage/AddLiquidity';
-import Pool from './components/PoolPage/Pool';
+import Header from "./components/Header/Header";
+import NativeLogin from "./components/NativeLogin/NativeLogin";
+import PoolExplorer from "./components/PoolExplorer/PoolExplorer";
+import AddLiquidity from "./components/AddLiquidityPage/AddLiquidity";
+import Pool from "./components/PoolPage/Pool";
+import Account from "./components/Account";
 import {
   getAllPairsAndSetToStore,
   getAllTokensAndSetToStore,
-} from './reactUtils/reactUtils';
-import { changeTheme, hideTip } from './store/actions/app';
+} from "./reactUtils/reactUtils";
+import { changeTheme, hideTip } from "./store/actions/app";
 import {
   enterSeedPhraseEmptyStorage,
   setEncryptedSeedPhrase,
   showEnterSeedPhraseUnlock,
-} from './store/actions/enterSeedPhrase';
+} from "./store/actions/enterSeedPhrase";
 import {
   setAssetsFromGraphQL,
   setPairsList,
   setSubscribeReceiveTokens,
-} from './store/actions/wallet';
-import { setNFTassets } from './store/actions/walletSeed';
+} from "./store/actions/wallet";
+import { setNFTassets } from "./store/actions/walletSeed";
 
 // TODO: Mock functions. To delete later
 function getAllPairsWoithoutProvider() {}
@@ -91,24 +92,24 @@ function App() {
   useEffect(async () => {
     setonloading(true);
     const theme =
-      localStorage.getItem('appTheme') === null
-        ? 'light'
-        : localStorage.getItem('appTheme');
+      localStorage.getItem("appTheme") === null
+        ? "light"
+        : localStorage.getItem("appTheme");
     if (appTheme !== theme) dispatch(changeTheme(theme));
     setonloading(false);
   }, []);
 
   useEffect(() => {
-    window.addEventListener('beforeunload', function (e) {
+    window.addEventListener("beforeunload", function (e) {
       if (swapAsyncIsWaiting || poolAsyncIsWaiting || manageAsyncIsWaiting)
-        e.returnValue = '';
+        e.returnValue = "";
     });
   }, [swapAsyncIsWaiting, poolAsyncIsWaiting, manageAsyncIsWaiting]);
 
   async function checkOnLogin() {
-    let esp = localStorage.getItem('esp');
+    let esp = localStorage.getItem("esp");
     if (esp === null) dispatch(enterSeedPhraseEmptyStorage(true));
-    else if (typeof esp === 'string') {
+    else if (typeof esp === "string") {
       // const receiveTokensData = JSON.parse(localStorage.getItem("setSubscribeReceiveTokens"))
       // dispatch(setSubscribeReceiveTokens(receiveTokensData))
       dispatch(enterSeedPhraseEmptyStorage(false));
@@ -122,7 +123,7 @@ function App() {
   });
 
   useEffect(async () => {
-    console.log(' useeffect agregateQueryNFTassets');
+    console.log(" useeffect agregateQueryNFTassets");
     const NFTassets = await agregateQueryNFTassets(clientData.address);
     // setAssets(NFTassets)
     dispatch(setNFTassets(NFTassets));
@@ -131,9 +132,9 @@ function App() {
   useEffect(async () => {
     if (!tips) return;
     if (
-      tips.type === 'error' ||
-      tips.message === 'Sent message to blockchain' ||
-      tips.message === 'Copied'
+      tips.type === "error" ||
+      tips.message === "Sent message to blockchain" ||
+      tips.message === "Copied"
     ) {
       enqueueSnackbar({ message: tips.message, type: tips.type });
       return;
@@ -142,12 +143,12 @@ function App() {
     const newTransList = JSON.parse(JSON.stringify(transListReceiveTokens));
     const NFTassets = await agregateQueryNFTassets(clientData.address);
     dispatch(setNFTassets(NFTassets));
-    if (tips.name === 'connectRoot') {
+    if (tips.name === "connectRoot") {
       await getAllPairsAndSetToStore(clientData.address);
       await getAllTokensAndSetToStore(clientData.address);
     }
-    if (tips.name === 'acceptedPairTokens') {
-      console.log('i at acceptedPairTokens');
+    if (tips.name === "acceptedPairTokens") {
+      console.log("i at acceptedPairTokens");
       setTimeout(
         async () => await getAllTokensAndSetToStore(clientData.address),
         10000,
@@ -155,13 +156,13 @@ function App() {
     }
 
     if (
-      tips.name === 'tokensReceivedCallback' ||
-      tips.name === 'processLiquidityCallback' ||
-      tips.name === 'sendTokens' ||
-      tips.name === 'connectRoot' ||
-      tips.name === 'UpdateBalanceTONs'
+      tips.name === "tokensReceivedCallback" ||
+      tips.name === "processLiquidityCallback" ||
+      tips.name === "sendTokens" ||
+      tips.name === "connectRoot" ||
+      tips.name === "UpdateBalanceTONs"
     ) {
-      console.log('i was here', tips);
+      console.log("i was here", tips);
       await getAllTokensAndSetToStore(clientData.address);
       dispatch(requestPairsFetch());
       dispatch(requestTokensFetch());
@@ -187,7 +188,7 @@ function App() {
 
   useEffect(() => {
     if (clientData.status) {
-      dispatch(updateTonContext('dexClientAddress', clientData.address));
+      dispatch(updateTonContext("dexClientAddress", clientData.address));
       dispatch(requestPairsFetch());
       dispatch(requestTokensFetch());
     }
@@ -202,6 +203,7 @@ function App() {
         <Route path="/pool" element={<Pool />} />
         <Route path="/swap" element={<SwapPage />} />
         <Route path="/add-liquidity" element={<AddLiquidity />} />
+        <Route path="/account" element={<Account />} />
       </Routes>
       <SwapConfirmPopup />
       <WaitingPopup />
