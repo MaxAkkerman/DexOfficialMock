@@ -1,13 +1,12 @@
-import './Header.scss';
+import "./Header.scss";
 
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
-
-import { changeTheme } from '../../store/actions/app';
-import HeaderMore from '../HeaderMore/HeaderMore';
-import Wallet from '../Wallet/Wallet';
+import { changeTheme } from "../../store/actions/app";
+import HeaderMore from "../HeaderMore/HeaderMore";
+import Wallet from "../Wallet/Wallet";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -15,9 +14,12 @@ export default function Header() {
   const location = useLocation();
   const theme = useSelector((state) => state.appReducer.appTheme);
   const clientData = useSelector((state) => state.walletReducer.clientData);
+  const connectWallet = useSelector(
+    (state) => state.tonContext.functions.connectWallet,
+  );
 
   const linkIsActive = (loc) => {
-    console.log('eee', location.pathname, 'loc', loc);
+    console.log("eee", location.pathname, "loc", loc);
 
     let x;
     location.pathname === loc ? (x = true) : (x = false);
@@ -25,7 +27,7 @@ export default function Header() {
   };
 
   function handlePushToLogin() {
-    navigate('/account');
+    navigate("/account");
   }
 
   return (
@@ -45,9 +47,9 @@ export default function Header() {
               id="nav-provide-liquidity"
               to="/pool"
               className={
-                linkIsActive('/pool')
-                  ? 'header-link header-link--active'
-                  : 'header-link'
+                linkIsActive("/pool")
+                  ? "header-link header-link--active"
+                  : "header-link"
               }
             >
               Provide Liquidity
@@ -57,9 +59,9 @@ export default function Header() {
               id="nav-pool-explorer"
               to="/pool-explorer"
               className={
-                linkIsActive('/pool-explorer')
-                  ? 'header-link header-link--active'
-                  : 'header-link'
+                linkIsActive("/pool-explorer")
+                  ? "header-link header-link--active"
+                  : "header-link"
               }
             >
               Pool Explorer
@@ -74,7 +76,7 @@ export default function Header() {
             <button
               id="nav-connect-wallet"
               className="btn wallet-btn"
-              onClick={handlePushToLogin}
+              onClick={connectWallet}
             >
               Connect wallet
             </button>
@@ -82,10 +84,10 @@ export default function Header() {
           <button
             className="btn action-btn header-btn"
             onClick={() =>
-              dispatch(changeTheme(theme === 'light' ? 'dark' : 'light'))
+              dispatch(changeTheme(theme === "light" ? "dark" : "light"))
             }
           >
-            {theme === 'light' ? (
+            {theme === "light" ? (
               <svg
                 width="26"
                 height="26"

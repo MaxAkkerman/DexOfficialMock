@@ -1,11 +1,11 @@
-import './Pool.scss';
+import "./Pool.scss";
 
-import React, { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import React, { useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
-import LiquidityItem from '../LiquidityItem/LiquidityItem';
-import MainBlock from '../MainBlock';
+import LiquidityItem from "../LiquidityItem/LiquidityItem";
+import MainBlock from "../MainBlock";
 
 function Pool() {
   const navigate = useNavigate();
@@ -16,13 +16,16 @@ function Pool() {
   );
   const tokens = useSelector((state) => state.tonData.tokens);
   const pairs = useSelector((state) => state.tonData.pairs);
+  const connectWallet = useSelector(
+    (state) => state.tonContext.functions.connectWallet,
+  );
 
   const pairsWithBalance = useMemo(() => {
-    const dsTokens = tokens.filter((t) => t.symbol.startsWith('DS'));
+    const dsTokens = tokens.filter((t) => t.symbol.startsWith("DS"));
     return pairs.map((p) => {
       const token = dsTokens.find((t) => {
-        const onlySymbols = t.symbol.replace(/^DS-/, '');
-        const [symbolA, symbolB] = onlySymbols.split('/');
+        const onlySymbols = t.symbol.replace(/^DS-/, "");
+        const [symbolA, symbolB] = onlySymbols.split("/");
 
         if (symbolA === p.symbolA && symbolB === p.symbolB) return t;
       });
@@ -40,42 +43,20 @@ function Pool() {
     });
   }, [tokens, pairs]);
 
-  function handleClickCreatePair() {
-    navigate('/create-pair');
-  }
-
   return (
     <div className="container">
       <MainBlock
-        class={'pool'}
+        class={"pool"}
         title="Liquidity pools"
-        button={
-          
-          <Link
-            to="/"
-            onClick={walletIsConnected ? () => handleClickCreatePair() : null}
-            className={`btn liquidity-btn ${
-              walletIsConnected ? null : 'btn--disabled'
-            }`}
-            // style={{fontSize: "20px", borderRadius: "12px"}}
-          >
-            Create Pair
-          </Link>
-        }
         content={
           !walletIsConnected ? (
-            <button
-              className="btn mainblock-btn"
-              onClick={() => navigate('/account')}
-            >
-              {!clientData.status && clientData.address.length === 66
-                ? 'Deploy wallet'
-                : 'Connect wallet'}
+            <button className="btn mainblock-btn" onClick={connectWallet}>
+              Connect wallet
             </button>
           ) : (
             <div className="pool-wrapper">
               {!pairs.length
-                ? 'You don’t have liquidity pairs yet'
+                ? "You don’t have liquidity pairs yet"
                 : pairsWithBalance.map((p) => (
                     <LiquidityItem
                       symbols={[p.symbolA, p.symbolB]}
