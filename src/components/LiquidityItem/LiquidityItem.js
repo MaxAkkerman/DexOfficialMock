@@ -1,10 +1,10 @@
-import './LiquidityItem.scss';
+import "./LiquidityItem.scss";
 
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import { iconGenerator } from '../../iconGenerator';
+import { iconGenerator } from "../../iconGenerator";
 import {
   setManageBalance,
   setManageFromToken,
@@ -12,9 +12,9 @@ import {
   setManageRateAB,
   setManageRateBA,
   setManageToToken,
-} from '../../store/actions/manage';
+} from "../../store/actions/manage";
 
-function LiquidityItem({ balance, symbols }) {
+function LiquidityItem({ balance, symbols, onClick }) {
   const tokenList = useSelector((state) => state.walletReducer.tokenList);
 
   const liquidityList = useSelector(
@@ -24,23 +24,23 @@ function LiquidityItem({ balance, symbols }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const pairsList = useSelector((state) => state.walletReducer.pairsList);
-  console.log('symbols', symbols);
+  const pairsList = useSelector((state) => state.tonData.pairs);
+  console.log("symbols", symbols);
   const handleClick = () => {
-    const fromToken = symbols[0].replaceAll('DS-W', '');
+    const fromToken = symbols[0].replaceAll("DS-W", "");
 
     let assetsArr = tokenList.concat(liquidityList);
     let fromT;
     let toT;
     const curSymbolPair = [];
     symbols.map((item) => {
-      if (item.includes('DS-')) {
-        curSymbolPair.push(item.replaceAll('DS-', ''));
+      if (item.includes("DS-")) {
+        curSymbolPair.push(item.replaceAll("DS-", ""));
       } else {
         curSymbolPair.push(item);
       }
     });
-    console.log('curSymbolPair', curSymbolPair);
+    console.log("curSymbolPair", curSymbolPair);
 
     assetsArr.map((item) => {
       if (item.symbol === curSymbolPair[0]) {
@@ -50,12 +50,12 @@ function LiquidityItem({ balance, symbols }) {
         toT = item.symbol;
       }
     });
-    console.log('assetsArr', assetsArr);
+    console.log("assetsArr", assetsArr);
 
     dispatch(setManageBalance(balance));
 
     pairsList.forEach((i) => {
-      console.log('pairsList', pairsList, 'to', toT, 'from', fromT);
+      console.log("pairsList", pairsList, "to", toT, "from", fromT);
       if (i.symbolA.includes(fromT) && i.symbolB.includes(toT)) {
         dispatch(setManageFromToken({ symbol: fromT, reserve: i.reserveA }));
         dispatch(setManageToToken({ symbol: toT, reserve: i.reserveB }));
@@ -70,11 +70,11 @@ function LiquidityItem({ balance, symbols }) {
         dispatch(setManageRateBA(i.rateBA));
       }
     });
-    navigate('/manage');
+    navigate("/manage");
   };
 
   return (
-    <div className="liquidity-item">
+    <div className="liquidity-item" onClick={onClick}>
       <div>
         <img src={iconGenerator(symbols[0])} alt={symbols[0]} />
         <img src={iconGenerator(symbols[1])} alt={symbols[1]} />

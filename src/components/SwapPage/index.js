@@ -20,6 +20,7 @@ import { AB_DIRECTION, BA_DIRECTION } from "../../constants/runtimeVariables";
 import useSelectPopup from "../../hooks/useSelectPopup";
 import { setSlippageValue, setSwapPopupValues } from "../../store/actions/swap";
 import truncateNum from "../../utils/truncateNum";
+import SwapConfirmPopup from "../SwapConfirmPopup";
 
 export default function SwapPage() {
   const { enqueueSnackbar } = useSnackbar();
@@ -226,115 +227,122 @@ export default function SwapPage() {
   const slippagePopup = useSlippagePopup((v) => setFieldValue("slippage", v));
   const selectFromPopup = useSelectPopup((t) => setFieldValue("fromToken", t));
   const selectToPopup = useSelectPopup((t) => setFieldValue("toToken", t));
+  const valuesPopup = useSelector((state) => state.swapReducer.values);
 
   return (
     <>
       <div className="container">
-        <MainBlock
-          content={
-            <div style={{ display: "contents" }}>
-              <div className="head_wrapper" style={{ marginBottom: "40px" }}>
-                <div
-                  className="left_block"
-                  style={{ color: "var(--mainblock-title-color)" }}
-                >
-                  Swap
+        {valuesPopup ? (
+          <SwapConfirmPopup />
+        ) : (
+          <MainBlock
+            content={
+              <div style={{ display: "contents" }}>
+                <div className="head_wrapper" style={{ marginBottom: "40px" }}>
+                  <div
+                    className="left_block"
+                    style={{ color: "var(--mainblock-title-color)" }}
+                  >
+                    Swap
+                  </div>
+                  <div className="settings_btn_container">
+                    <SettingsButton
+                      aria-describedby={slippagePopup.id}
+                      onClick={slippagePopup.handleClick}
+                    />
+                  </div>
                 </div>
-                <div className="settings_btn_container">
-                  <SettingsButton
-                    aria-describedby={slippagePopup.id}
-                    onClick={slippagePopup.handleClick}
+                <form onSubmit={handleSubmit}>
+                  <Input
+                    label="From"
+                    name="fromValue"
+                    value={values.fromValue}
+                    onMaxClick={handleMaxClick}
+                    onValueChange={handleChange}
+                    onValueBlur={handleBlur}
+                    onSelectClick={selectFromPopup.handleOpen}
+                    token={values.fromToken}
+                    error={
+                      touched.fromValue &&
+                      (errors.fromValue || errors.fromToken)
+                    }
+                    helperText={
+                      touched.fromValue &&
+                      (errors.fromValue || errors.fromToken)
+                    }
                   />
-                </div>
+                  <SwapButton
+                    onClick={handleTokensInvert}
+                    className="swap-btn"
+                    type="button"
+                  />
+                  <Input
+                    className="input"
+                    label="To"
+                    name="toValue"
+                    notExact
+                    value={values.toValue}
+                    onValueChange={handleChange}
+                    onValueBlur={handleBlur}
+                    onSelectClick={selectToPopup.handleOpen}
+                    token={values.toToken}
+                    error={touched.toToken && errors.toToken}
+                    helperText={
+                      (touched.toToken && errors.toToken) ||
+                      "Field is automatically calculated"
+                    }
+                    readOnly
+                  />
+                  <CurrentButton />
+                  {rate ? (
+                    <p className="swap-rate">
+                      Price{" "}
+                      <span>
+                        {truncateNum(rate)} {values.toToken.symbol}
+                      </span>{" "}
+                      per <span>1 {values.fromToken.symbol}</span>
+                    </p>
+                  ) : null}
+                </form>
               </div>
-              <form onSubmit={handleSubmit}>
-                <Input
-                  label="From"
-                  name="fromValue"
-                  value={values.fromValue}
-                  onMaxClick={handleMaxClick}
-                  onValueChange={handleChange}
-                  onValueBlur={handleBlur}
-                  onSelectClick={selectFromPopup.handleOpen}
-                  token={values.fromToken}
-                  error={
-                    touched.fromValue && (errors.fromValue || errors.fromToken)
-                  }
-                  helperText={
-                    touched.fromValue && (errors.fromValue || errors.fromToken)
-                  }
-                />
-                <SwapButton
-                  onClick={handleTokensInvert}
-                  className="swap-btn"
-                  type="button"
-                />
-                <Input
-                  className="input"
-                  label="To"
-                  name="toValue"
-                  notExact
-                  value={values.toValue}
-                  onValueChange={handleChange}
-                  onValueBlur={handleBlur}
-                  onSelectClick={selectToPopup.handleOpen}
-                  token={values.toToken}
-                  error={touched.toToken && errors.toToken}
-                  helperText={
-                    (touched.toToken && errors.toToken) ||
-                    "Field is automatically calculated"
-                  }
-                  readOnly
-                />
-                <CurrentButton />
-                {rate ? (
-                  <p className="swap-rate">
-                    Price{" "}
-                    <span>
-                      {truncateNum(rate)} {values.toToken.symbol}
-                    </span>{" "}
-                    per <span>1 {values.fromToken.symbol}</span>
-                  </p>
-                ) : null}
-              </form>
-            </div>
-          }
-          footer={
-            values.fromToken &&
-            values.toToken && (
-              <div className="mainblock-footer">
-                <div
-                  className="mainblock-footer-wrap"
-                  style={{ justifyContent: "space-around" }}
-                >
-                  <div className="swap-confirm-wrap">
-                    <p className="mainblock-footer-value">
-                      {truncateNum(
-                        values.toValue -
-                          (values.toValue * values.slippage) / 100,
-                      )}{" "}
-                      {values.toToken.symbol}
-                    </p>
-                    <p className="mainblock-footer-subtitle">
-                      Minimum <br /> received
-                    </p>
-                  </div>
-                  <div className="swap-confirm-wrap">
-                    <p className="mainblock-footer-value">
-                      {values.pair
-                        ? truncateNum((values.fromValue * 0.3) / 100)
-                        : 0.0}{" "}
-                      {values.fromToken.symbol}
-                    </p>
-                    <p className="mainblock-footer-subtitle">
-                      Liquidity <br /> Provider Fee
-                    </p>
+            }
+            footer={
+              values.fromToken &&
+              values.toToken && (
+                <div className="mainblock-footer">
+                  <div
+                    className="mainblock-footer-wrap"
+                    style={{ justifyContent: "space-around" }}
+                  >
+                    <div className="swap-confirm-wrap">
+                      <p className="mainblock-footer-value">
+                        {truncateNum(
+                          values.toValue -
+                            (values.toValue * values.slippage) / 100,
+                        )}{" "}
+                        {values.toToken.symbol}
+                      </p>
+                      <p className="mainblock-footer-subtitle">
+                        Minimum <br /> received
+                      </p>
+                    </div>
+                    <div className="swap-confirm-wrap">
+                      <p className="mainblock-footer-value">
+                        {values.pair
+                          ? truncateNum((values.fromValue * 0.3) / 100)
+                          : 0.0}{" "}
+                        {values.fromToken.symbol}
+                      </p>
+                      <p className="mainblock-footer-subtitle">
+                        Liquidity <br /> Provider Fee
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )
-          }
-        />
+              )
+            }
+          />
+        )}
       </div>
       {selectFromPopup.open && (
         <SelectPopup

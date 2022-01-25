@@ -1,4 +1,4 @@
-export default async function getAllPairsWithoutProvider() {
+export default async function getAllPairs() {
   return [
     {
       exists: true,

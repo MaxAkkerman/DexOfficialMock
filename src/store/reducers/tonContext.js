@@ -1,10 +1,10 @@
-import reduce from 'lodash/reduce';
+import reduce from "lodash/reduce";
 
 import {
   INIT_TON_CONTEXT,
   RESET_TON_CONTEXT,
   UPDATE_TON_CONTEXT,
-} from '../actions/types';
+} from "../actions/types";
 
 const initialState = {
   context: {
@@ -16,8 +16,8 @@ const initialState = {
   },
   functions: {
     cancelLimitOrder() {},
-    getAllClientWallets() {},
-    getAllPairsWithoutProvider() {},
+    getAllTokenWallets() {},
+    getAllPairs() {},
     makeLimitOrder() {},
     swap() {},
     takeLimitOrder() {},

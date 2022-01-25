@@ -8,6 +8,7 @@ import SwapConfirmPopup from "./components/SwapConfirmPopup";
 import SwapPage from "./components/SwapPage";
 import WaitingPopup from "./components/WaitingPopup";
 import {
+  requestLpTokensFetch,
   requestPairsFetch,
   requestTokensFetch,
   updateTonContext,
@@ -19,6 +20,7 @@ import PoolExplorer from "./components/PoolExplorer/PoolExplorer";
 import AddLiquidity from "./components/AddLiquidityPage/AddLiquidity";
 import Pool from "./components/PoolPage/Pool";
 import Account from "./components/Account";
+import Manage from "./components/ManagePage";
 import {
   getAllPairsAndSetToStore,
   getAllTokensAndSetToStore,
@@ -184,15 +186,8 @@ function App() {
   useEffect(() => {
     dispatch(requestPairsFetch());
     dispatch(requestTokensFetch());
-  }, []);
-
-  useEffect(() => {
-    if (clientData.status) {
-      dispatch(updateTonContext("dexClientAddress", clientData.address));
-      dispatch(requestPairsFetch());
-      dispatch(requestTokensFetch());
-    }
-  }, [clientData]);
+    dispatch(requestLpTokensFetch());
+  }, [dispatch]);
 
   return (
     <>
@@ -204,8 +199,8 @@ function App() {
         <Route path="/swap" element={<SwapPage />} />
         <Route path="/add-liquidity" element={<AddLiquidity />} />
         <Route path="/account" element={<Account />} />
+        <Route path="/manage" element={<Manage />} />
       </Routes>
-      <SwapConfirmPopup />
       <WaitingPopup />
     </>
   );

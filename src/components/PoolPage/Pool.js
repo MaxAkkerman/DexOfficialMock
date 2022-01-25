@@ -6,42 +6,33 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import LiquidityItem from "../LiquidityItem/LiquidityItem";
 import MainBlock from "../MainBlock";
+import { setLiquidityValues } from "../../store/actions/liquidity";
 
 function Pool() {
   const navigate = useNavigate();
   const clientData = useSelector((state) => state.walletReducer.clientData);
+  const dispatch = useDispatch();
 
   const walletIsConnected = useSelector(
     (state) => state.appReducer.walletIsConnected,
   );
-  const tokens = useSelector((state) => state.tonData.tokens);
   const pairs = useSelector((state) => state.tonData.pairs);
   const connectWallet = useSelector(
     (state) => state.tonContext.functions.connectWallet,
   );
+  const lpTokens = useSelector((state) => state.tonData.lpTokens);
+  const lpTokensWithPairs = useMemo(
+    () =>
+      lpTokens.map((t) => ({
+        ...t,
+        pair: pairs.find((p) => p.pairAddress === t.pairAddress),
+      })),
+    [lpTokens, pairs],
+  );
 
-  const pairsWithBalance = useMemo(() => {
-    const dsTokens = tokens.filter((t) => t.symbol.startsWith("DS"));
-    return pairs.map((p) => {
-      const token = dsTokens.find((t) => {
-        const onlySymbols = t.symbol.replace(/^DS-/, "");
-        const [symbolA, symbolB] = onlySymbols.split("/");
-
-        if (symbolA === p.symbolA && symbolB === p.symbolB) return t;
-      });
-
-      if (token)
-        return {
-          ...p,
-          balance: token.balance,
-        };
-
-      return {
-        ...p,
-        balance: 0,
-      };
-    });
-  }, [tokens, pairs]);
+  function handleClick(e, t) {
+    dispatch(setLiquidityValues(t));
+  }
 
   return (
     <div className="container">
@@ -57,11 +48,12 @@ function Pool() {
             <div className="pool-wrapper">
               {!pairs.length
                 ? "You don’t have liquidity pairs yet"
-                : pairsWithBalance.map((p) => (
+                : lpTokensWithPairs.map((t) => (
                     <LiquidityItem
-                      symbols={[p.symbolA, p.symbolB]}
-                      balance={p.balance}
-                      key={p.walletAddress}
+                      symbols={[t.pair.symbolA, t.pair.symbolB]}
+                      balance={t.balance}
+                      key={t.walletAddress}
+                      onClick={(e) => handleClick(e, t)}
                     />
                   ))}
             </div>

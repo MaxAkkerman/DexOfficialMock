@@ -1,11 +1,11 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from "redux-saga/effects";
 
 import {
   TOKENS_FETCH_FAILED,
   TOKENS_FETCH_LOADING,
   TOKENS_FETCH_REQUESTED,
   TOKENS_FETCH_SUCCEEDED,
-} from '../actions/types';
+} from "../actions/types";
 
 function* fetchTokens() {
   yield put({
@@ -13,10 +13,10 @@ function* fetchTokens() {
   });
 
   try {
-    const getAllClientWallets = yield select(
-      (state) => state.tonContext.functions.getAllClientWallets,
+    const getAllTokenWallets = yield select(
+      (state) => state.tonContext.functions.getAllTokenWallets,
     );
-    const tokens = yield call(getAllClientWallets);
+    const tokens = yield call(getAllTokenWallets);
 
     yield put({
       payload: tokens,

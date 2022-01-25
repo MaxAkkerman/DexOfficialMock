@@ -1,4 +1,4 @@
-export default async function getAllClientWallets() {
+export default async function getAllTokenWallets() {
   return [
     {
       balance: 0.289999999989,
@@ -41,6 +41,20 @@ export default async function getAllClientWallets() {
       type: "PureToken",
       walletAddress:
         "0:53489672a1e951f2c1c3c14676a3d5b80031844daf97df6ea355f2e66ebaf731",
+    },
+    {
+      walletAddress:
+        "0:e23997ef3464f66b3f16569f52daed59fd4fe4620bd0075a4d021b70f58debe8",
+      symbol: "USDC",
+      tokenName: "USDC",
+      type: "PureToken",
+      owner_address:
+        "0:ed0ada5abf50d796e164ebf27e2b9912dda60947749b0d1a2bf3108aa9a8d086",
+      decimals: 6,
+      icon: "https://beta.defispace.com/0293f5cadbe9a399e2d3.svg",
+      rootAddress:
+        "0:1ad0575f0f98f87a07ec505c39839cb9766c70a11dadbfc171f59b2818759819",
+      balance: 194.321055,
     },
   ];
 }

@@ -7,8 +7,9 @@ import { initTonContext, updateTonContext } from "../store/actions/ton";
 import rootReducer from "../store/reducers";
 import rootSaga from "../store/sagas";
 import connectWallet from "../utils/connectWallet";
-import getAllClientWallets from "../utils/getAllClientWallets";
-import getAllPairsWithoutProvider from "../utils/getAllPairsWithoutProvider";
+import getAllTokenWallets from "../utils/getAllTokenWallets";
+import getAllPairs from "../utils/getAllPairs";
+import getAllLpWallets from "../utils/getAllLpWallets";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -29,18 +30,10 @@ export const reduxStore = createStore(
       },
       functions: {
         connectWallet,
-        getAllClientWallets,
-        getAllPairsWithoutProvider,
+        getAllTokenWallets,
+        getAllPairs,
+        getAllLpWallets,
       },
-    },
-    tutorialReducer: {
-      finished:
-        localStorage.getItem("tutorialFinished") === null
-          ? isEmpty(JSON.parse(localStorage.getItem("clientData"))) &&
-            isEmpty(JSON.parse(localStorage.getItem("esp")))
-            ? false
-            : true
-          : localStorage.getItem("tutorialFinished"),
     },
   },
   composeWithDevTools(applyMiddleware(sagaMiddleware)),
