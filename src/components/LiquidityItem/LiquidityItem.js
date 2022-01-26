@@ -1,9 +1,10 @@
 import "./LiquidityItem.scss";
 
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 import { iconGenerator } from "../../iconGenerator";
 import {
   setManageBalance,
@@ -15,16 +16,16 @@ import {
 } from "../../store/actions/manage";
 
 function LiquidityItem({ balance, symbols, onClick }) {
-  const tokenList = useSelector((state) => state.walletReducer.tokenList);
+  const tokenList = useAppSelector((state) => state.walletReducer.tokenList);
 
-  const liquidityList = useSelector(
+  const liquidityList = useAppSelector(
     (state) => state.walletReducer.liquidityList,
   );
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const pairsList = useSelector((state) => state.tonData.pairs);
+  const pairsList = useAppSelector((state) => state.tonData.pairs);
   console.log("symbols", symbols);
   const handleClick = () => {
     const fromToken = symbols[0].replaceAll("DS-W", "");

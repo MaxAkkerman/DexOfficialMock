@@ -1,9 +1,15 @@
 import { all } from "redux-saga/effects";
 
-import fetchPairsSaga from "../sagas/fetchPairs";
-import fetchTokensSaga from "../sagas/fetchTokens";
-import fetchLpTokensSaga from "../sagas/fetchLpTokens";
+import connectWalletSaga from "./connectWallet";
+import fetchLpTokensSaga from "./fetchLpTokens";
+import fetchPairsSaga from "./fetchPairs";
+import fetchTokensSaga from "./fetchTokens";
 
 export default function* rootSaga() {
-  yield all([fetchPairsSaga(), fetchTokensSaga(), fetchLpTokensSaga()]);
+  yield all([
+    fetchPairsSaga(),
+    fetchTokensSaga(),
+    fetchLpTokensSaga(),
+    connectWalletSaga(),
+  ]);
 }

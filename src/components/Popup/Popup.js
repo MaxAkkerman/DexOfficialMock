@@ -1,24 +1,25 @@
-import './Popup.scss';
+import "./Popup.scss";
 
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React from "react";
+import { useDispatch } from "react-redux";
 
-import chrome from '../../images/icons/chrome.svg';
-import { hidePopup } from '../../store/actions/app';
-import CloseBtn from '../CloseBtn';
-import MainBlock from '../MainBlock';
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import chrome from "../../images/icons/chrome.svg";
+import { hidePopup } from "../../store/actions/app";
+import CloseBtn from "../CloseBtn";
+import MainBlock from "../MainBlock";
 
 function Popup(props) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   return (
     <div className="popup-wrapper">
       <MainBlock
         smallTitle={true}
-        button={props.type === 'extension' && <CloseBtn func={hidePopup} />}
+        button={props.type === "extension" && <CloseBtn func={hidePopup} />}
         content={
           <div className="popup-content">
-            {props.type === 'success' && (
+            {props.type === "success" && (
               <>
                 <svg
                   width="87"
@@ -88,7 +89,7 @@ function Popup(props) {
                 </a>
               </>
             )}
-            {props.type === 'error' && (
+            {props.type === "error" && (
               <>
                 <svg
                   width="87"
@@ -152,7 +153,7 @@ function Popup(props) {
               </>
             )}
 
-            {props.type === 'extension' && (
+            {props.type === "extension" && (
               <a
                 href={props.link}
                 target="_blank"

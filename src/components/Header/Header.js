@@ -1,22 +1,20 @@
 import "./Header.scss";
 
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 import { changeTheme } from "../../store/actions/app";
+import { requestConnectWallet } from "../../store/actions/wallet";
 import HeaderMore from "../HeaderMore/HeaderMore";
 import Wallet from "../Wallet/Wallet";
 
 export default function Header() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
-  const theme = useSelector((state) => state.appReducer.appTheme);
-  const clientData = useSelector((state) => state.walletReducer.clientData);
-  const connectWallet = useSelector(
-    (state) => state.tonContext.functions.connectWallet,
-  );
+  const theme = useAppSelector((state) => state.appReducer.appTheme);
+  const clientData = useAppSelector((state) => state.walletReducer.clientData);
 
   const linkIsActive = (loc) => {
     console.log("eee", location.pathname, "loc", loc);
@@ -28,6 +26,10 @@ export default function Header() {
 
   function handlePushToLogin() {
     navigate("/account");
+  }
+
+  function handleConnectWallet() {
+    dispatch(requestConnectWallet());
   }
 
   return (
@@ -76,7 +78,7 @@ export default function Header() {
             <button
               id="nav-connect-wallet"
               className="btn wallet-btn"
-              onClick={connectWallet}
+              onClick={handleConnectWallet}
             >
               Connect wallet
             </button>

@@ -1,26 +1,22 @@
 import "./Pool.scss";
 
-import React, { useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useMemo } from "react";
 
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { setLiquidityValues } from "../../store/actions/liquidity";
+import { requestConnectWallet } from "../../store/actions/wallet";
 import LiquidityItem from "../LiquidityItem/LiquidityItem";
 import MainBlock from "../MainBlock";
-import { setLiquidityValues } from "../../store/actions/liquidity";
 
 function Pool() {
-  const navigate = useNavigate();
-  const clientData = useSelector((state) => state.walletReducer.clientData);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const walletIsConnected = useSelector(
+  const walletIsConnected = useAppSelector(
     (state) => state.appReducer.walletIsConnected,
   );
-  const pairs = useSelector((state) => state.tonData.pairs);
-  const connectWallet = useSelector(
-    (state) => state.tonContext.functions.connectWallet,
-  );
-  const lpTokens = useSelector((state) => state.tonData.lpTokens);
+  const pairs = useAppSelector((state) => state.tonData.pairs);
+  const lpTokens = useAppSelector((state) => state.tonData.lpTokens);
   const lpTokensWithPairs = useMemo(
     () =>
       lpTokens.map((t) => ({
@@ -34,6 +30,10 @@ function Pool() {
     dispatch(setLiquidityValues(t));
   }
 
+  function handleConnectWallet() {
+    dispatch(requestConnectWallet());
+  }
+
   return (
     <div className="container">
       <MainBlock
@@ -41,7 +41,7 @@ function Pool() {
         title="Liquidity pools"
         content={
           !walletIsConnected ? (
-            <button className="btn mainblock-btn" onClick={connectWallet}>
+            <button className="btn mainblock-btn" onClick={handleConnectWallet}>
               Connect wallet
             </button>
           ) : (

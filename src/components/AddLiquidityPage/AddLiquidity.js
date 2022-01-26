@@ -1,56 +1,53 @@
-import './AddLiquidity.scss';
+import "./AddLiquidity.scss";
 
-import { FormHelperText } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { FormHelperText } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import Input from '../Input';
-import MainBlock from '../MainBlock';
-import PoolConfirmPopup from '../PoolConfirmPopup/PoolConfirmPopup';
-import WaitingPopup from '../WaitingPopup';
-import { PROVIDE_LIQUIDITY_COMMISSION } from '../../constants/commissions';
+import { PROVIDE_LIQUIDITY_COMMISSION } from "../../constants/commissions";
 import {
   NOT_ENOUGH,
   NOT_ENOUGH as NOT_ENOUGH_MSG,
   NOT_ENOUGH_CAUSE_COMMISSION as NOT_ENOUGH_CAUSE_COMMISSION_MSG,
   NOT_TOUCHED,
-} from '../../constants/validationMessages';
-import {
-  getDecimals,
-  getFraction,
-  getSumsForProvide,
-} from '../../reactUtils/reactUtils';
-import { showPopup } from '../../store/actions/app';
+} from "../../constants/validationMessages";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { getDecimals, getSumsForProvide } from "../../reactUtils/reactUtils";
+import { showPopup } from "../../store/actions/app";
 import {
   setPoolAsyncIsWaiting,
   setPoolFromToken,
   setPoolToToken,
-} from '../../store/actions/pool';
+} from "../../store/actions/pool";
+import Input from "../Input";
+import MainBlock from "../MainBlock";
+import PoolConfirmPopup from "../PoolConfirmPopup/PoolConfirmPopup";
+import WaitingPopup from "../WaitingPopup";
 
 function AddLiquidity() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // TODO: replace with something real
   const assetList = [];
 
-  const walletIsConnected = useSelector(
+  const walletIsConnected = useAppSelector(
     (state) => state.appReducer.walletIsConnected,
   );
 
-  const pairsList = useSelector((state) => state.walletReducer.pairsList);
+  const pairsList = useAppSelector((state) => state.walletReducer.pairsList);
 
-  const fromToken = useSelector((state) => state.poolReducer.fromToken);
-  const toToken = useSelector((state) => state.poolReducer.toToken);
+  const fromToken = useAppSelector((state) => state.poolReducer.fromToken);
+  const toToken = useAppSelector((state) => state.poolReducer.toToken);
 
-  const fromValue = useSelector((state) => state.poolReducer.fromInputValue);
-  const toValue = useSelector((state) => state.poolReducer.toInputValue);
-  const pairId = useSelector((state) => state.poolReducer.pairId);
-  const tips = useSelector((state) => state.appReducer.tips);
-  const tokenList = useSelector((state) => state.walletReducer.tokenList);
+  const fromValue = useAppSelector((state) => state.poolReducer.fromInputValue);
+  const toValue = useAppSelector((state) => state.poolReducer.toInputValue);
+  const pairId = useAppSelector((state) => state.poolReducer.pairId);
+  const tips = useAppSelector((state) => state.appReducer.tips);
+  const tokenList = useAppSelector((state) => state.walletReducer.tokenList);
 
-  const poolAsyncIsWaiting = useSelector(
+  const poolAsyncIsWaiting = useAppSelector(
     (state) => state.poolReducer.poolAsyncIsWaiting,
   );
 
@@ -62,10 +59,10 @@ function AddLiquidity() {
 
   const [rateAB, setRateAB] = useState(0);
   const [rateBA, setRateBA] = useState(0);
-  const [rateType, setRateType] = useState('AB');
+  const [rateType, setRateType] = useState("AB");
 
-  const [fromTokenSymbol, setFromTokenSymbol] = useState('');
-  const [toTokenSymbol, setTotTokenSymbol] = useState('');
+  const [fromTokenSymbol, setFromTokenSymbol] = useState("");
+  const [toTokenSymbol, setTotTokenSymbol] = useState("");
   const [ratesData, setRatesData] = useState({});
 
   const [incorrectBalance, setincorrectBalance] = useState(false);
@@ -76,7 +73,7 @@ function AddLiquidity() {
 
   useEffect(async () => {
     if (!tips || tips.length) return;
-    if (tips.name === 'processLiquidityCallback') {
+    if (tips.name === "processLiquidityCallback") {
       if (fromToken.symbol || toToken.Symbol) {
         const fromTokenCopy = JSON.parse(JSON.stringify(fromToken));
         const toTokenCopy = JSON.parse(JSON.stringify(toToken));
@@ -122,14 +119,14 @@ function AddLiquidity() {
       const curPair = pairsList.filter(
         (item) => item.pairAddress === pairId,
       )[0];
-      console.log('curPair', curPair);
+      console.log("curPair", curPair);
       const totalSupply = curPair.totalSupply;
       const reservesA = curPair.reserveA;
       const reservesB = curPair.reserveB;
       const symbA = curPair.symbolA;
       const symbB = curPair.symbolB;
       //console.log("curPair",curPair)
-      console.log('ratesdata', {
+      console.log("ratesdata", {
         totalSupply: +totalSupply / getDecimals(curPair.decimalsAB),
         reservesA: +reservesA / getDecimals(curPair.decimalsA),
         reservesB: +reservesB / getDecimals(curPair.decimalsB),
@@ -152,14 +149,14 @@ function AddLiquidity() {
         if (i.symbolA === fromToken.symbol && i.symbolB === toToken.symbol) {
           setRateAB(i.rateAB);
           setRateBA(i.rateBA);
-          setRateType('AB');
+          setRateType("AB");
         } else if (
           i.symbolB === fromToken.symbol &&
           i.symbolA === toToken.symbol
         ) {
           setRateAB(i.rateAB);
           setRateBA(i.rateBA);
-          setRateType('BA');
+          setRateType("BA");
         }
       });
 
@@ -179,13 +176,13 @@ function AddLiquidity() {
     if (!fromValue && !toValue) return;
 
     if (fromValue > fromToken.balance) {
-      console.log('return', fromValue, '____', fromToken.balance);
+      console.log("return", fromValue, "____", fromToken.balance);
       setincorrectBalance(true);
       setTimeout(() => setincorrectBalance(false), 200);
       return;
     }
     if (toValue > toToken.balance) {
-      console.log('return', fromValue, '____', fromToken.balance);
+      console.log("return", fromValue, "____", fromToken.balance);
       setincorrectBalanceToValue(true);
       setTimeout(() => setincorrectBalanceToValue(false), 200);
       return;
@@ -199,7 +196,7 @@ function AddLiquidity() {
       setPoolConfirmPopupIsVisible(true);
     } else {
       dispatch(
-        showPopup({ type: 'error', message: 'Fields should not be empty' }),
+        showPopup({ type: "error", message: "Fields should not be empty" }),
       );
     }
   }
@@ -251,7 +248,7 @@ function AddLiquidity() {
       if (toValue === 0 || fromValue === 0)
         localErrors.emptyFields = NOT_TOUCHED;
 
-      const tonAsset = assetList.find((t) => t.symbol === 'EVER');
+      const tonAsset = assetList.find((t) => t.symbol === "EVER");
       if (tonAsset && tonAsset.balance) {
         const nativeTONBalance = tonAsset.balance;
 
@@ -306,15 +303,15 @@ function AddLiquidity() {
     }
   }
   return (
-    <div className="container" style={{ flexDirection: 'column' }}>
+    <div className="container" style={{ flexDirection: "column" }}>
       {!poolAsyncIsWaiting && (
         <>
-          <div style={{ display: 'contents' }}>
+          <div style={{ display: "contents" }}>
             <MainBlock
               style={{
                 borderColor: errors.commission
-                  ? 'var(--error)'
-                  : 'var(--mainblock-border-color)',
+                  ? "var(--error)"
+                  : "var(--mainblock-border-color)",
               }}
               smallTitle={false}
               title={
@@ -337,29 +334,29 @@ function AddLiquidity() {
               content={
                 <div>
                   <Input
-                    type={'from'}
-                    text={'From'}
+                    type={"from"}
+                    text={"From"}
                     autoFocus={true}
                     token={fromToken}
                     value={fromValue}
                     ratesData={ratesData}
-                    componentName={'provide'}
+                    componentName={"provide"}
                     borderError={errors.fromTokenAmount}
                     incorrectBalance={incorrectBalance}
                   />
                   {errors.fromTokenAmount ? (
                     <FormHelperText
                       error
-                      sx={{ marginLeft: '27px', color: 'var(--text-color)' }}
+                      sx={{ marginLeft: "27px", color: "var(--text-color)" }}
                     >
                       {NOT_ENOUGH}
                     </FormHelperText>
                   ) : (
-                    <div style={{ height: '22px' }} />
+                    <div style={{ height: "22px" }} />
                   )}
                   <svg
                     className="add-liquidity-plus"
-                    style={{ marginTop: '26px' }}
+                    style={{ marginTop: "26px" }}
                     width="45"
                     height="46"
                     viewBox="0 0 45 46"
@@ -372,14 +369,14 @@ function AddLiquidity() {
                     />
                   </svg>
                   <Input
-                    type={'to'}
+                    type={"to"}
                     text={
                       toValue > 0 ? (
                         <>
                           To <span>(estimated)</span>
                         </>
                       ) : (
-                        'To'
+                        "To"
                       )
                     }
                     token={toToken}
@@ -387,27 +384,27 @@ function AddLiquidity() {
                     value={toValue}
                     readOnly={
                       ratesData.reservesA && ratesData.reservesB
-                        ? 'readOnly'
-                        : ''
+                        ? "readOnly"
+                        : ""
                     }
                     incorrectBalanceToValue={incorrectBalanceToValue}
                   />
                   {errors.toTokenAmount ? (
                     <FormHelperText
                       error
-                      sx={{ marginLeft: '27px', color: 'var(--text-color)' }}
+                      sx={{ marginLeft: "27px", color: "var(--text-color)" }}
                     >
                       {NOT_ENOUGH}
                     </FormHelperText>
                   ) : (
-                    <div style={{ height: '22px' }} />
+                    <div style={{ height: "22px" }} />
                   )}
                   {!ratesData.reservesA || !ratesData.reservesB ? (
                     <div
                       style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'space-evenly',
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-evenly",
                       }}
                     >
                       The pair is empty - you can set the rate by supplying it.
@@ -418,9 +415,9 @@ function AddLiquidity() {
                     toToken.symbol && (
                       <div
                         style={{
-                          display: 'flex',
-                          flexDirection: 'row',
-                          justifyContent: 'space-evenly',
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-evenly",
                         }}
                       >
                         <div className="add-liquidity-wrapper">
@@ -481,16 +478,16 @@ function AddLiquidity() {
 
                           <div>
                             <span>
-                              {rateType === 'AB'
+                              {rateType === "AB"
                                 ? getNumType(rateBA)
-                                : getNumType(rateAB)}{' '}
+                                : getNumType(rateAB)}{" "}
                             </span>
                             {fromTokenSymbol} per 1 {toTokenSymbol}
                           </div>
 
                           <div>
                             <span>
-                              {rateType === 'AB'
+                              {rateType === "AB"
                                 ? getNumType(rateAB)
                                 : getNumType(rateBA)}
                             </span>
@@ -525,8 +522,8 @@ function AddLiquidity() {
                         fromValue &&
                         toValue &&
                         !isError
-                          ? 'btn mainblock-btn'
-                          : 'btn mainblock-btn btn--disabled'
+                          ? "btn mainblock-btn"
+                          : "btn mainblock-btn btn--disabled"
                       }
                     >
                       Supply
@@ -534,13 +531,13 @@ function AddLiquidity() {
                   ) : (
                     <button
                       className="btn mainblock-btn"
-                      onClick={() => navigate('/account')}
+                      onClick={() => navigate("/account")}
                     >
                       Connect wallet
                     </button>
                   )}
                   {!fromValue && !toValue && (
-                    <FormHelperText sx={{ textAlign: 'center' }}>
+                    <FormHelperText sx={{ textAlign: "center" }}>
                       {NOT_TOUCHED}
                     </FormHelperText>
                   )}
@@ -550,7 +547,7 @@ function AddLiquidity() {
             {errors.commission && (
               <FormHelperText
                 error
-                sx={{ color: 'var(--text-color)', textAlign: 'center' }}
+                sx={{ color: "var(--text-color)", textAlign: "center" }}
               >
                 {errors.commission}
               </FormHelperText>

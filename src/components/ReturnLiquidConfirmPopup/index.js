@@ -1,8 +1,9 @@
 import "./index.scss";
 
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 import { iconGenerator } from "../../iconGenerator";
 import { setTips } from "../../store/actions/app";
 import { setManageAsyncIsWaiting } from "../../store/actions/manage";
@@ -12,12 +13,12 @@ import MainBlock from "../MainBlock";
 function returnLiquidity() {}
 
 function ReturnLiquidConfirmPopup(props) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  let curExt = useSelector((state) => state.appReducer.curExt);
+  let curExt = useAppSelector((state) => state.appReducer.curExt);
 
-  const balance = useSelector((state) => state.manageReducer.balance);
-  const pairId = useSelector((state) => state.manageReducer.pairId);
+  const balance = useAppSelector((state) => state.manageReducer.balance);
+  const pairId = useAppSelector((state) => state.manageReducer.pairId);
 
   async function handleRemoveConfirm() {
     // let decrypted = await decrypt(encryptedSeedPhrase, seedPhrasePassword)

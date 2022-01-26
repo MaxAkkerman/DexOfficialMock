@@ -1,6 +1,5 @@
-import moment from 'moment';
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import moment from "moment";
+import React, { useEffect, useState } from "react";
 import {
   Area,
   AreaChart,
@@ -9,17 +8,18 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from 'recharts';
+} from "recharts";
 
-import Loader from '../Loader';
-import SearchInput from '../SearchInput';
-import styles from './PoolExplorer.module.scss';
-import PoolExplorerItem from './PoolExplorerItem/PoolExplorerItem';
+import { useAppSelector } from "../../hooks/useAppSelector";
+import Loader from "../Loader";
+import SearchInput from "../SearchInput";
+import styles from "./PoolExplorer.module.scss";
+import PoolExplorerItem from "./PoolExplorerItem/PoolExplorerItem";
 
 function PoolExplorer() {
-  const [filter, setFilter] = useState('');
-  // const pairsList = useSelector((state) => state.walletReducer.pairsList);
-  const pairsList = useSelector((state) => state.tonData.pairs);
+  const [filter, setFilter] = useState("");
+  // const pairsList = useAppSelector((state) => state.walletReducer.pairsList);
+  const pairsList = useAppSelector((state) => state.tonData.pairs);
   const [curTVL, setCurTVL] = useState(0);
   const [curDate, setCurDate] = useState(null);
   const [pairsArr, setPairsArray] = useState([]);
@@ -40,24 +40,24 @@ function PoolExplorer() {
     if (active) {
       callback(
         payload[0].value,
-        moment(payload[0].payload.time).format('DD.MM.YYYY'),
+        moment(payload[0].payload.time).format("DD.MM.YYYY"),
       );
       console.log(payload, payload[0].payload);
       return <div className="custom-tooltip"></div>;
     } else {
       callback(
         data[data.length - 1].value,
-        moment(data[data.length - 1].time).format('DD.MM.YYYY'),
+        moment(data[data.length - 1].time).format("DD.MM.YYYY"),
       );
     }
     return null;
   }
 
   function formatXAxis(tickItem) {
-    return moment(tickItem).format('DD');
+    return moment(tickItem).format("DD");
   }
   return (
-    <div className="container" onClick={() => console.log('pool')}>
+    <div className="container" onClick={() => console.log("pool")}>
       <div className={styles.BigMainBlock}>
         <>
           <div className="head_wrapper">
@@ -66,7 +66,7 @@ function PoolExplorer() {
           <div>TVL:{curTVL / 1e9}</div>
           {curDate !== null && <div>{curDate}</div>}
 
-          <div style={{ width: '100%', height: 300 }}>
+          <div style={{ width: "100%", height: 300 }}>
             <ResponsiveContainer>
               <AreaChart
                 data={data}
@@ -94,16 +94,16 @@ function PoolExplorer() {
           {!pairsArr.length ? (
             <div
               style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
               <Loader />
             </div>
           ) : (
             <>
-              <div style={{ marginTop: '20px' }}>
+              <div style={{ marginTop: "20px" }}>
                 <SearchInput func={setFilter.bind(this)} />
               </div>
               <div className="select-list-pool">
@@ -122,7 +122,7 @@ function PoolExplorer() {
                   .map((item) => (
                     <PoolExplorerItem
                       pair={item}
-                      key={item.symbolA + ' ' + item.symbolB}
+                      key={item.symbolA + " " + item.symbolB}
                     />
                   ))}
               </div>

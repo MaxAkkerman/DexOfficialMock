@@ -2,29 +2,30 @@ import "./index.scss";
 
 import React, { useEffect, useState } from "react";
 import Slider from "react-rangeslider";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 
 import MainBlock from "../../components/MainBlock";
 import ManageConfirmPopup from "../../components/ManageConfirmPopup";
 import ReturnLiquidConfirmPopup from "../../components/ReturnLiquidConfirmPopup";
 import WaitingPopup from "../../components/WaitingPopup";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 import { iconGenerator } from "../../iconGenerator";
 import { setManageAsyncIsWaiting } from "../../store/actions/manage";
 
 function Manage() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const fromToken = useSelector((state) => state.manageReducer.fromToken);
-  const toToken = useSelector((state) => state.manageReducer.toToken);
-  const rateAB = useSelector((state) => state.manageReducer.rateAB);
-  const rateBA = useSelector((state) => state.manageReducer.rateBA);
-  const balance = useSelector((state) => state.manageReducer.balance);
-  const pairId = useSelector((state) => state.manageReducer.pairId);
-  const manageAsyncIsWaiting = useSelector(
+  const fromToken = useAppSelector((state) => state.manageReducer.fromToken);
+  const toToken = useAppSelector((state) => state.manageReducer.toToken);
+  const rateAB = useAppSelector((state) => state.manageReducer.rateAB);
+  const rateBA = useAppSelector((state) => state.manageReducer.rateBA);
+  const balance = useAppSelector((state) => state.manageReducer.balance);
+  const pairId = useAppSelector((state) => state.manageReducer.pairId);
+  const manageAsyncIsWaiting = useAppSelector(
     (state) => state.manageReducer.manageAsyncIsWaiting,
   );
-  const values = useSelector((state) => state.liquidityReducer.values);
+  const values = useAppSelector((state) => state.liquidityReducer.values);
 
   const [managePopupIsVisible, setManagePopupIsVisible] = useState(true);
   const [manageRemoveIsVisible, setManageRemoveIsVisible] = useState(false);

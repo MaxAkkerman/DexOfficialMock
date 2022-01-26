@@ -1,16 +1,17 @@
-import './index.scss';
+import "./index.scss";
 
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from "react";
 
-import Loader from '../Loader';
-import MainBlock from '../MainBlock';
-import { resetWaitingPopupValues } from '../../store/actions/waitingPopup';
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { resetWaitingPopupValues } from "../../store/actions/waitingPopup";
+import Loader from "../Loader";
+import MainBlock from "../MainBlock";
 
 export default function WaitingPopup() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const values = useSelector((state) => state.waitingPopup.values);
+  const values = useAppSelector((state) => state.waitingPopup.values);
 
   function onClose() {
     dispatch(resetWaitingPopupValues());
@@ -27,7 +28,7 @@ export default function WaitingPopup() {
           <div className="popup-content">
             <Loader />
             <p className="popup-loading-text">
-              {title || 'Sending message to blockchain'}
+              {title || "Sending message to blockchain"}
             </p>
             {text && (
               <p className="popup-loading-text popup-loading-descr">{text}</p>

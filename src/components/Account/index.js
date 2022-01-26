@@ -1,25 +1,25 @@
 import "./index.scss";
 
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 
-import { showDeployPopup } from "../../store/actions/deployPopup";
-
-import MainBlock from "..//MainBlock";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 import { copyToClipboard } from "../../reactUtils/reactUtils";
 import { setWalletIsConnected } from "../../store/actions/app";
+import { showDeployPopup } from "../../store/actions/deployPopup";
 import { setClientData } from "../../store/actions/wallet";
+import MainBlock from "..//MainBlock";
 
 function Account() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isCopied, setCopied] = useState(false);
-  const walletIsConnected = useSelector(
+  const walletIsConnected = useAppSelector(
     (state) => state.appReducer.walletIsConnected,
   );
-  const clientData = useSelector((state) => state.walletReducer.clientData);
-  const transListReceiveTokens = useSelector(
+  const clientData = useAppSelector((state) => state.walletReducer.clientData);
+  const transListReceiveTokens = useAppSelector(
     (state) => state.walletReducer.transListReceiveTokens,
   );
   const [transArr, setTransArr] = useState([]);

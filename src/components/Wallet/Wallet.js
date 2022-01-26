@@ -1,16 +1,16 @@
 import "./Wallet.scss";
 
 import React from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import { useAppSelector } from "../../hooks/useAppSelector";
 import { iconGenerator } from "../../iconGenerator";
 
 function Wallet() {
   const navigate = useNavigate();
 
-  const clientData = useSelector((state) => state.walletReducer.clientData);
-  const updatedWallet = useSelector(
+  const clientData = useAppSelector((state) => state.walletReducer.clientData);
+  const updatedWallet = useAppSelector(
     (state) => state.walletReducer.updatedWallet,
   );
 

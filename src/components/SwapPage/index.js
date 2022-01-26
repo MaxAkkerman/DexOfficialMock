@@ -2,13 +2,17 @@ import "./index.scss";
 
 import { useFormik } from "formik";
 import compact from "lodash/compact";
-import every from "lodash/every";
 import find from "lodash/find";
 import reject from "lodash/reject";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useSnackbar } from "notistack";
+import { useEffect, useMemo, useState } from "react";
 
+import { AB_DIRECTION, BA_DIRECTION } from "../../constants/runtimeVariables";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import useSelectPopup from "../../hooks/useSelectPopup";
+import { setSlippageValue, setSwapPopupValues } from "../../store/actions/swap";
+import { requestConnectWallet } from "../../store/actions/wallet";
+import truncateNum from "../../utils/truncateNum";
 import Button from "../Button";
 import Input from "../Input";
 import MainBlock from "../MainBlock";
@@ -16,26 +20,18 @@ import SelectPopup from "../SelectPopup";
 import SettingsButton from "../SettingsButton";
 import SlippagePopup from "../SlippagePopup";
 import SwapButton from "../SwapButton";
-import { AB_DIRECTION, BA_DIRECTION } from "../../constants/runtimeVariables";
-import useSelectPopup from "../../hooks/useSelectPopup";
-import { setSlippageValue, setSwapPopupValues } from "../../store/actions/swap";
-import truncateNum from "../../utils/truncateNum";
 import SwapConfirmPopup from "../SwapConfirmPopup";
 
 export default function SwapPage() {
-  const { enqueueSnackbar } = useSnackbar();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const walletConnected = useSelector(
+  const walletConnected = useAppSelector(
     (state) => state.appReducer.walletIsConnected,
   );
-  const tokens = useSelector((state) => state.tonData.tokens);
-  const pairs = useSelector((state) => state.tonData.pairs);
-  const slippage = useSelector((state) => state.swapReducer.slippage);
-  const clientData = useSelector((state) => state.walletReducer.clientData);
-  const connectWallet = useSelector(
-    (state) => state.tonContext.functions.connectWallet,
-  );
+  const tokens = useAppSelector((state) => state.tonData.tokens);
+  const pairs = useAppSelector((state) => state.tonData.pairs);
+  const slippage = useAppSelector((state) => state.swapReducer.slippage);
+  const clientData = useAppSelector((state) => state.walletReducer.clientData);
 
   const {
     errors,
@@ -134,23 +130,10 @@ export default function SwapPage() {
     dispatch(setSwapPopupValues(values));
   }
 
-  const handleConnectWallet = useCallback(async () => {
-    try {
-      const success = await connectWallet();
-      if (success)
-        enqueueSnackbar({
-          type: "success",
-          message: "Your wallet is successfully connected",
-        });
-      else throw new Error(`Function "connectWallet" can't connect`);
-    } catch (e) {
-      console.error(e);
-      enqueueSnackbar({
-        type: "error",
-        message: "Failed to connect the wallet",
-      });
-    }
-  }, [connectWallet, enqueueSnackbar]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  function handleConnectWallet() {
+    dispatch(requestConnectWallet());
+  }
 
   function handleTokensInvert() {
     setFieldValue("fromToken", values.toToken);
@@ -168,7 +151,7 @@ export default function SwapPage() {
     else if (!clientData.status && clientData.address.length === 66)
       return "DEPLOY_WALLET";
     else return "DO_SWAP";
-  }, [walletConnected]);
+  }, [walletConnected, clientData.status, clientData.address]);
 
   const CurrentButton = useMemo(() => {
     const props = {
@@ -193,7 +176,7 @@ export default function SwapPage() {
     return function CurrentButton(p) {
       return <Button {...props} {...p} />;
     };
-  }, [currentState, clientData, handleConnectWallet]);
+  }, [currentState, handleConnectWallet]);
 
   // Store slippage globally
   useEffect(() => {
@@ -227,7 +210,7 @@ export default function SwapPage() {
   const slippagePopup = useSlippagePopup((v) => setFieldValue("slippage", v));
   const selectFromPopup = useSelectPopup((t) => setFieldValue("fromToken", t));
   const selectToPopup = useSelectPopup((t) => setFieldValue("toToken", t));
-  const valuesPopup = useSelector((state) => state.swapReducer.values);
+  const valuesPopup = useAppSelector((state) => state.swapReducer.values);
 
   return (
     <>

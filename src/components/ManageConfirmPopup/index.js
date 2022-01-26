@@ -1,29 +1,30 @@
 import "./index.scss";
 
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 import { iconGenerator } from "../../iconGenerator";
 import {
   setPoolFromToken,
   setPoolPairId,
   setPoolToToken,
 } from "../../store/actions/pool";
-import MainBlock from "../MainBlock";
 import CloseBtn from "../CloseBtn";
+import MainBlock from "../MainBlock";
 
 function ManageConfirmPopup(props) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const tokenList = useSelector((state) => state.tonData.tokens);
-  const fromToken = useSelector((state) => state.manageReducer.fromToken);
-  const toToken = useSelector((state) => state.manageReducer.toToken);
-  const balance = useSelector((state) => state.manageReducer.balance);
-  const pairId = useSelector((state) => state.manageReducer.pairId);
-  const pairS = useSelector((state) => state.walletReducer.pairsList);
-  const values = useSelector((state) => state.liquidityReducer.values);
+  const tokenList = useAppSelector((state) => state.tonData.tokens);
+  const fromToken = useAppSelector((state) => state.manageReducer.fromToken);
+  const toToken = useAppSelector((state) => state.manageReducer.toToken);
+  const balance = useAppSelector((state) => state.manageReducer.balance);
+  const pairId = useAppSelector((state) => state.manageReducer.pairId);
+  const pairS = useAppSelector((state) => state.walletReducer.pairsList);
+  const values = useAppSelector((state) => state.liquidityReducer.values);
 
   let curPair = values.pair;
 

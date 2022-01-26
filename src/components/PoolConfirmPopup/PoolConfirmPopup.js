@@ -1,28 +1,28 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from "react";
 
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { iconGenerator } from "../../iconGenerator";
+import { setTips } from "../../store/actions/app";
+import { setPoolAsyncIsWaiting } from "../../store/actions/pool";
 import {
   setSwapFromInputValue,
   setSwapToInputValue,
-} from '../../store/actions/swap';
-
-import { iconGenerator } from '../../iconGenerator';
-import { setTips } from '../../store/actions/app';
-import { setPoolAsyncIsWaiting } from '../../store/actions/pool';
-import MainBlock from '../MainBlock';
+} from "../../store/actions/swap";
+import MainBlock from "../MainBlock";
 
 function PoolConfirmPopup(props) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const fromToken = useSelector((state) => state.poolReducer.fromToken);
-  const toToken = useSelector((state) => state.poolReducer.toToken);
-  const clientData = useSelector((state) => state.walletReducer.clientData);
+  const fromToken = useAppSelector((state) => state.poolReducer.fromToken);
+  const toToken = useAppSelector((state) => state.poolReducer.toToken);
+  const clientData = useAppSelector((state) => state.walletReducer.clientData);
 
-  const fromValue = useSelector((state) => state.poolReducer.fromInputValue);
-  const toValue = useSelector((state) => state.poolReducer.toInputValue);
-  const tokenList = useSelector((state) => state.walletReducer.tokenList);
+  const fromValue = useAppSelector((state) => state.poolReducer.fromInputValue);
+  const toValue = useAppSelector((state) => state.poolReducer.toInputValue);
+  const tokenList = useAppSelector((state) => state.walletReducer.tokenList);
 
-  const pairId = useSelector((state) => state.poolReducer.pairId);
+  const pairId = useAppSelector((state) => state.poolReducer.pairId);
 
   async function handleSuply() {
     /**

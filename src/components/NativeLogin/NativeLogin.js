@@ -1,19 +1,19 @@
-import './NativeLogin.scss';
+import "./NativeLogin.scss";
 
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-import { connectWallet } from '../../store/actions/app';
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { connectWallet } from "../../store/actions/app";
 
 function NativeLogin() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleClick = async () => {
     dispatch(connectWallet());
 
-    navigate('/account');
+    navigate("/account");
   };
 
   return (

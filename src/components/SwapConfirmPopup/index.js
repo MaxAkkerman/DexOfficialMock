@@ -1,25 +1,26 @@
 import "./index.scss";
 
+import { Box, Modal } from "@mui/material";
+import { useSnackbar } from "notistack";
 import React, { useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
-import MainBlock from "../MainBlock";
 import { AB_DIRECTION, BA_DIRECTION } from "../../constants/runtimeVariables";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 import { iconGenerator } from "../../iconGenerator";
 import miniSwap from "../../images/icons/mini-swap.png";
 import { resetSwapPopupValues } from "../../store/actions/swap";
 import truncateNum from "../../utils/truncateNum";
-import { Box, Modal } from "@mui/material";
-import { useSnackbar } from "notistack";
 import CloseBtn from "../CloseBtn";
+import MainBlock from "../MainBlock";
 
 export default function SwapConfirmPopup() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
-  const appTheme = useSelector((state) => state.appReducer.appTheme);
-  const values = useSelector((state) => state.swapReducer.values);
-  const swap = useSelector((state) => state.tonContext.functions.swap);
+  const appTheme = useAppSelector((state) => state.appReducer.appTheme);
+  const values = useAppSelector((state) => state.swapReducer.values);
+  const swap = useAppSelector((state) => state.tonContext.functions.swap);
 
   const directionPair = useMemo(() => {
     if (!values) return;

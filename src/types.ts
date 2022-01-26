@@ -7,3 +7,8 @@ export type FunctionsContext = {
     }>;
   };
 };
+
+export interface AlertMessageProps {
+  type: "success" | "info" | "error";
+  message: string;
+}
