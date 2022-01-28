@@ -1,7 +1,5 @@
-import { useSnackbar } from "notistack";
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import { useMount } from "react-use";
 
 import Account from "./components/Account";
 import AddLiquidity from "./components/AddLiquidityPage/AddLiquidity";

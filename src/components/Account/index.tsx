@@ -1,7 +1,7 @@
 import "./index.scss";
 
 import { useSnackbar } from "notistack";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
 import { useAppDispatch } from "../../hooks/useAppDispatch";
@@ -14,7 +14,6 @@ function Account() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
-  const [isCopied, setCopied] = useState(false);
   const walletIsConnected = useAppSelector((state) => state.client);
   const clientData = useAppSelector((state) => state.client);
 
@@ -99,8 +98,6 @@ function Account() {
                     fill="white"
                   />
                 </svg>
-                {!isCopied && <span>Copy address</span>}
-                {isCopied && <span>Address copied</span>}
               </button>
               <button
                 className="account-btn account-disconnect"

@@ -7,13 +7,11 @@ import reject from "lodash/reject";
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+import { AB_DIRECTION, BA_DIRECTION } from "../../constants/runtimeVariables";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import useSelectPopup from "../../hooks/useSelectPopup";
-import {
-  resetProvideLiquidityConfirmValues,
-  setProvideLiquidityConfirmValues,
-} from "../../store/actions";
+import { setProvideLiquidityConfirmValues } from "../../store/actions";
 import {
   ProvideLiquidityValuesConfirm,
   ProvideLiquidityValuesFormik,
@@ -44,13 +42,12 @@ function AddLiquidity() {
       onSubmit: handleConfirm,
     });
 
-  const [rateAB, setRateAB] = useState(0);
-  const [rateBA, setRateBA] = useState(0);
-  const [rateType, setRateType] = useState("AB");
-
-  const [fromTokenSymbol, setFromTokenSymbol] = useState("");
-  const [toTokenSymbol, setTotTokenSymbol] = useState("");
-  const [ratesData, setRatesData] = useState({});
+  const directionPair = useMemo(() => {
+    if (values.fromToken && values.pair)
+      return values.fromToken.rootAddress === values.pair.rootA
+        ? AB_DIRECTION
+        : BA_DIRECTION;
+  }, [values.fromToken, values.pair]);
 
   const [totalLPs, settotalLPs] = useState(0);
   const [poolSharePercentage, setpoolSharePercentage] = useState(0);
@@ -92,21 +89,6 @@ function AddLiquidity() {
       Math.floor((provideArr[1] * totalSupplyBefore) / reserveB),
     );
   }
-
-  useEffect(() => {
-    const curPair = values.pair;
-    if (!curPair) return;
-
-    const symbA = curPair.symbolA;
-    const symbB = curPair.symbolB;
-    setRatesData({
-      totalSupply: curPair.totalSupply,
-      reservesA: curPair.reserveA,
-      reservesB: curPair.reserveB,
-      symbA: symbA,
-      symbB: symbB,
-    });
-  }, [values.pair]);
 
   function handleConfirm() {
     dispatch(
@@ -348,20 +330,20 @@ function AddLiquidity() {
 
                       <div>
                         <span>
-                          {rateType === "AB"
-                            ? getNumType(rateBA)
-                            : getNumType(rateAB)}{" "}
+                          {directionPair === AB_DIRECTION
+                            ? getNumType(values.pair.rateBA)
+                            : getNumType(values.pair.rateAB)}{" "}
                         </span>
                         {values.fromToken.symbol} per 1 {values.toToken.symbol}
                       </div>
 
                       <div>
                         <span>
-                          {rateType === "AB"
+                          {directionPair === AB_DIRECTION
                             ? getNumType(values.pair.rateAB)
                             : getNumType(values.pair.rateBA)}
                         </span>
-                        {toTokenSymbol} per 1 {fromTokenSymbol}
+                        {values.toToken.symbol} per 1 {values.fromToken.symbol}
                       </div>
                     </div>
 
@@ -372,12 +354,12 @@ function AddLiquidity() {
                       </div>
                       <div>
                         <span>{getNumType(values.pair.reserveA)}</span>
-                        {fromTokenSymbol} pooled
+                        {values.fromToken.symbol} pooled
                       </div>
 
                       <div>
                         <span>{getNumType(values.pair.reserveB)}</span>
-                        {toTokenSymbol} pooled
+                        {values.toToken.symbol} pooled
                       </div>
                     </div>
                   </div>
