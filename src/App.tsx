@@ -10,7 +10,12 @@ import SwapPage from "./components/SwapPage";
 import WaitingPopup from "./components/WaitingPopup";
 import { useAppDispatch } from "./hooks/useAppDispatch";
 import { useAppSelector } from "./hooks/useAppSelector";
-import { changeThemeAction } from "./store/actions";
+import {
+  changeThemeAction,
+  requestLpTokensFetchAction,
+  requestPairsFetchAction,
+  requestTokensFetchAction,
+} from "./store/actions";
 import { ThemeVariant } from "./types";
 
 function App() {
@@ -24,6 +29,12 @@ function App() {
         : localStorage.getItem("appTheme");
     if (appTheme !== theme) dispatch(changeThemeAction(theme as ThemeVariant));
   }, [dispatch, appTheme]);
+
+  useEffect(() => {
+    dispatch(requestTokensFetchAction());
+    dispatch(requestPairsFetchAction());
+    dispatch(requestLpTokensFetchAction());
+  }, [dispatch]);
 
   return (
     <>

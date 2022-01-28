@@ -20,7 +20,6 @@ export default function SelectPopup({
   title,
 }: SelectPopupProps) {
   const [searchWord, setSearchWord] = useState("");
-  console.log("tokens", tokens);
   const filteredTokens = useMemo(
     () =>
       tokens
