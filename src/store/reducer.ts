@@ -25,6 +25,7 @@ import {
   CREATE_PAIR_FAILED,
   CREATE_PAIR_SUCCEEDED,
   CREATING_PAIR,
+  DISCONNECT_WALLET,
   LP_TOKENS_FETCH_FAILED,
   LP_TOKENS_FETCH_LOADING,
   LP_TOKENS_FETCH_SUCCEEDED,
@@ -176,6 +177,7 @@ export default function reducer(state = initialState, action: ReduxAction) {
       });
     case CONNECT_WALLET_SUCCEEDED:
       return produce(state, (draft) => {
+        draft.client = action.payload;
         draft.clientError = null;
         draft.clientFetched = true;
         draft.clientLoading = false;
@@ -187,6 +189,14 @@ export default function reducer(state = initialState, action: ReduxAction) {
         draft.clientFetched = true;
         draft.clientLoading = false;
         draft.tips.push(CONNECT_WALLET_FAILED);
+      });
+    case DISCONNECT_WALLET:
+      return produce(state, (draft) => {
+        draft.client = null;
+        draft.clientError = null;
+        draft.clientFetched = false;
+        draft.clientLoading = false;
+        draft.tips.push(DISCONNECT_WALLET);
       });
     case PAIRS_FETCH_SUCCEEDED:
       return produce(state, (draft) => {
