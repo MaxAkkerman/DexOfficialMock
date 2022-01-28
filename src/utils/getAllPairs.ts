@@ -14,7 +14,7 @@ export default async function getAllPairs() {
         "0:95934aa6a66cb3eb211a80e99234dfbba6329cfa31600ce3c2b070d8d9677cef",
       symbolA: "WTON",
       symbolB: "DAI",
-      totalSupply: "10999999",
+      totalSupply: 10999999,
     },
     {
       exists: true,
@@ -30,7 +30,7 @@ export default async function getAllPairs() {
         "0:1ad0575f0f98f87a07ec505c39839cb9766c70a11dadbfc171f59b2818759819",
       symbolA: "WTON",
       symbolB: "USDC",
-      totalSupply: "1500000",
+      totalSupply: 1500000,
     },
   ];
 }

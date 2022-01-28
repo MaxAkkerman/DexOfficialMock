@@ -2,8 +2,7 @@ export default async function getAllTokenWallets() {
   return [
     {
       balance: 0.289999999989,
-      decimals: "18",
-      icon: "https://trade.defispace.com/b73b696693dcd144056b89329a461e9b.svg",
+      decimals: 18,
       owner_address:
         "0:5ed9bef6272079ce03e48469f315bccb50fc61de3cfa4a34e1c69992b30b8e2c",
       rootAddress:
@@ -16,8 +15,7 @@ export default async function getAllTokenWallets() {
     },
     {
       balance: 57.922748,
-      decimals: "6",
-      icon: "https://trade.defispace.com/0de21bf496e8428f05bf28029caa4965.svg",
+      decimals: 6,
       owner_address:
         "0:533d4ec07d8e610c2cce9e755f90ab75898f46a67c0daa860fb3bfd1774134b1",
       rootAddress:
@@ -30,8 +28,7 @@ export default async function getAllTokenWallets() {
     },
     {
       balance: 18.371355611,
-      decimals: "9",
-      icon: "https://trade.defispace.com/06f491487328de8e7fd81d835cfda442.svg",
+      decimals: 9,
       owner_address:
         "0:5b3b1c2a86941cdb30b925f711034bf3f4430d15d02a696e9242e1a7fcebaba8",
       rootAddress:
@@ -51,7 +48,6 @@ export default async function getAllTokenWallets() {
       owner_address:
         "0:ed0ada5abf50d796e164ebf27e2b9912dda60947749b0d1a2bf3108aa9a8d086",
       decimals: 6,
-      icon: "https://beta.defispace.com/0293f5cadbe9a399e2d3.svg",
       rootAddress:
         "0:1ad0575f0f98f87a07ec505c39839cb9766c70a11dadbfc171f59b2818759819",
       balance: 194.321055,
