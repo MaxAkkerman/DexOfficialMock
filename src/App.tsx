@@ -5,7 +5,9 @@ import Account from "./components/Account";
 import AddLiquidity from "./components/AddLiquidityPage/AddLiquidity";
 import Header from "./components/Header/Header";
 import NativeLogin from "./components/NativeLogin/NativeLogin";
+import Notifications from "./components/Notifications";
 import Pool from "./components/PoolPage/Pool";
+import SwapConfirmPopup from "./components/SwapConfirmPopup";
 import SwapPage from "./components/SwapPage";
 import WaitingPopup from "./components/WaitingPopup";
 import { useAppDispatch } from "./hooks/useAppDispatch";
@@ -46,7 +48,9 @@ function App() {
         <Route path="/add-liquidity" element={<AddLiquidity />} />
         <Route path="/account" element={<Account />} />
       </Routes>
+      <Notifications />
       <WaitingPopup />
+      <SwapConfirmPopup />
     </>
   );
 }

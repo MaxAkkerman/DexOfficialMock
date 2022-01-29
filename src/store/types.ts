@@ -3,6 +3,7 @@ export const MAKE_SWAP = "MAKE_SWAP" as const;
 export const SWAP_HAPPENING = "SWAP_HAPPENING" as const;
 export const SWAP_SUCCEEDED = "SWAP_SUCCEEDED" as const;
 export const SWAP_FAILED = "SWAP_FAILED" as const;
+export const UPDATE_SWAP_WALLETS = "UPDATE_SWAP_WALLETS" as const;
 
 // Add liquidity
 export const ADD_LIQUIDITY = "ADD_LIQUIDITY" as const;

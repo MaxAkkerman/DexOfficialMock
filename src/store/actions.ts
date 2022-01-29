@@ -65,6 +65,7 @@ import {
   TOKENS_FETCH_LOADING,
   TOKENS_FETCH_REQUESTED,
   TOKENS_FETCH_SUCCEEDED,
+  UPDATE_SWAP_WALLETS,
 } from "./types";
 
 // Swap
@@ -92,6 +93,13 @@ export function setSwapFailedAction(e: ActionError) {
   return {
     type: SWAP_FAILED,
     payload: e,
+  };
+}
+
+export function updateSwapWalletsAction(tokens: Token[]) {
+  return {
+    type: UPDATE_SWAP_WALLETS,
+    payload: tokens,
   };
 }
 

@@ -54,9 +54,29 @@ import {
   TOKENS_FETCH_FAILED,
   TOKENS_FETCH_LOADING,
   TOKENS_FETCH_SUCCEEDED,
+  UPDATE_SWAP_WALLETS,
 } from "./types";
 
-const tips: string[] = [];
+const tips: (
+  | typeof SWAP_HAPPENING
+  | typeof SWAP_SUCCEEDED
+  | typeof SWAP_FAILED
+  | typeof ADDING_LIQUIDITY
+  | typeof ADD_LIQUIDITY_SUCCEEDED
+  | typeof ADD_LIQUIDITY_FAILED
+  | typeof REMOVING_LIQUIDITY
+  | typeof REMOVE_LIQUIDITY_SUCCEEDED
+  | typeof REMOVE_LIQUIDITY_FAILED
+  | typeof CREATING_PAIR
+  | typeof CREATE_PAIR_SUCCEEDED
+  | typeof CREATE_PAIR_FAILED
+  | typeof MAKING_LIMIT_ORDER
+  | typeof MAKE_LIMIT_ORDER_SUCCEEDED
+  | typeof MAKE_LIMIT_ORDER_FAILED
+  | typeof CONNECTING_WALLET
+  | typeof CONNECT_WALLET_SUCCEEDED
+  | typeof CONNECT_WALLET_FAILED
+)[] = [];
 
 const appTheme: ThemeVariant = "light" as ThemeVariant;
 
@@ -119,6 +139,10 @@ export default function reducer(state = initialState, action: ReduxAction) {
     case SWAP_FAILED:
       return produce(state, (draft) => {
         draft.tips.push(SWAP_FAILED);
+      });
+    case UPDATE_SWAP_WALLETS:
+      return produce(state, (draft) => {
+        draft.tokens = action.payload;
       });
     case ADDING_LIQUIDITY:
       return produce(state, (draft) => {
@@ -196,7 +220,6 @@ export default function reducer(state = initialState, action: ReduxAction) {
         draft.clientError = null;
         draft.clientFetched = false;
         draft.clientLoading = false;
-        draft.tips.push(DISCONNECT_WALLET);
       });
     case PAIRS_FETCH_SUCCEEDED:
       return produce(state, (draft) => {

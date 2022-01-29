@@ -13,8 +13,3 @@ export const reduxStore = configureStore({
 });
 
 sagaMiddleware.run(rootSaga);
-
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof reduxStore.getState>;
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof reduxStore.dispatch;

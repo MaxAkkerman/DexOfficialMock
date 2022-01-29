@@ -7,7 +7,9 @@ import {
   ReactElement,
 } from "react";
 import { NumberFormatValues, SourceInfo } from "react-number-format";
+import { select, SelectEffect } from "redux-saga/effects";
 
+import { reduxStore } from "./lib/redux";
 import {
   addLiquidityAction,
   changeThemeAction,
@@ -57,6 +59,7 @@ import {
   setTokensFetchLoadingAction,
   setTokensFetchSucceededAction,
   setWaitingPopupValues,
+  updateSwapWalletsAction,
 } from "./store/actions";
 
 export interface AlertMessageProps {
@@ -248,10 +251,11 @@ export type DirectionPair = "AB" | "BA";
 
 export interface MakeSwapArg {
   directionPair: DirectionPair;
-  pairAddr: string;
-  qtyFrom: number;
-  qtyTo: number;
-  slippage: number;
+  pair: Pair;
+  fromToken: Token;
+  toToken: Token;
+  fromValue: number;
+  toValue: number;
 }
 
 export type ActionError = string;
@@ -326,7 +330,8 @@ export type ReduxAction =
   | ReturnType<typeof setCreatePairSucceededAction>
   | ReturnType<typeof setCreatePairFailedAction>
   | ReturnType<typeof disconnectWalletAction>
-  | ReturnType<typeof changeThemeAction>;
+  | ReturnType<typeof changeThemeAction>
+  | ReturnType<typeof updateSwapWalletsAction>;
 
 export type ThemeVariant = "light" | "dark";
 
@@ -366,3 +371,8 @@ export interface SelectItemProps {
 }
 
 export type SwapButtonProps = ButtonProps;
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof reduxStore.getState>;
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof reduxStore.dispatch;
