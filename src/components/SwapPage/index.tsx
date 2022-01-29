@@ -29,9 +29,11 @@ import SelectPopup from "../SelectPopup";
 import SettingsButton from "../SettingsButton";
 import SlippagePopup from "../SlippagePopup";
 import SwapButton from "../SwapButton";
+import {useNavigate} from "react-router-dom";
 
 export default function SwapPage() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const walletConnected = useAppSelector((state) => state.client);
   const tokens: Token[] = useAppSelector((state) => state.tokens);
@@ -136,7 +138,8 @@ export default function SwapPage() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   function handleConnectWallet() {
-    dispatch(connectWalletAction());
+    // dispatch(connectWalletAction());
+    navigate("/account")
   }
 
   function handleTokensInvert() {

@@ -18,7 +18,8 @@ function Pool() {
   const lpTokens = useAppSelector((state) => state.lpTokens);
 
   function handleConnectWallet() {
-    dispatch(connectWalletAction());
+    // dispatch(connectWalletAction());
+    navigate("/account")
   }
 
   function handleItemClick(lpToken: LpToken) {

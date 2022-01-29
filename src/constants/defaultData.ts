@@ -2,6 +2,15 @@ import TON from '../images/tokens/TONold.svg';
 import wBTC from '../images/tokens/wBTC.svg';
 import wETH from '../images/tokens/wETH.svg';
 
+
+export const extensions = [
+  {
+    symbol: 'TON wallet',
+    chainID: 1,
+    rootAddress: 1
+  }
+]
+
 export const marks = [
   {
     value: 6,

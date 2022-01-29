@@ -201,10 +201,10 @@ export default function reducer(state = initialState, action: ReduxAction) {
       });
     case CONNECT_WALLET_SUCCEEDED:
       return produce(state, (draft) => {
-        draft.client = action.payload;
         draft.clientError = null;
         draft.clientFetched = true;
         draft.clientLoading = false;
+        draft.client = action.payload;
         draft.tips.push(CONNECT_WALLET_SUCCEEDED);
       });
     case CONNECT_WALLET_FAILED:
@@ -216,10 +216,10 @@ export default function reducer(state = initialState, action: ReduxAction) {
       });
     case DISCONNECT_WALLET:
       return produce(state, (draft) => {
-        draft.client = null;
         draft.clientError = null;
         draft.clientFetched = false;
         draft.clientLoading = false;
+        draft.client = null;
       });
     case PAIRS_FETCH_SUCCEEDED:
       return produce(state, (draft) => {

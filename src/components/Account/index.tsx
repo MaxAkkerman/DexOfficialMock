@@ -6,9 +6,10 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { disconnectWalletAction } from "../../store/actions";
+import {connectWalletAction, disconnectWalletAction} from "../../store/actions";
 import copyToClipboard from "../../utils/copyToClipboard";
 import MainBlock from "..//MainBlock";
+import Extensions from "../Extensions";
 
 function Account() {
   const navigate = useNavigate();
@@ -19,10 +20,16 @@ function Account() {
 
   function handleDisconnect() {
     dispatch(disconnectWalletAction());
+    navigate("/swap")
   }
-
-  if (!walletIsConnected) return <Navigate to="/swap" />;
-
+  function handleConnectWallet() {
+    dispatch(connectWalletAction());
+  }
+  if (!clientData) return <Extensions
+    onClose={() => navigate("/swap")}
+    onSelect={() => dispatch(connectWalletAction())}
+  />;
+  
   return (
     <div className="container">
       <MainBlock
@@ -98,7 +105,17 @@ function Account() {
                     fill="white"
                   />
                 </svg>
+                <span>Copy address</span>
+
               </button>
+              <a
+                href={`https://ton.sh/address/${clientData ? clientData.address : null}`}
+                target="_blank"
+                className="account-link"
+                rel="noreferrer"
+              >
+                Ton.sh
+              </a>
               <button
                 className="account-btn account-disconnect"
                 onClick={handleDisconnect}

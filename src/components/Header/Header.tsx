@@ -1,28 +1,46 @@
 import "./Header.scss";
 
 import cls from "classnames";
-import { NavLink } from "react-router-dom";
-
+import {NavLink, useNavigate} from "react-router-dom";
+import logo from "../../images/logo.png"
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { changeThemeAction, connectWalletAction } from "../../store/actions";
 import HeaderMore from "../HeaderMore/HeaderMore";
 import Wallet from "../Wallet";
+import Extensions from "../Extensions";
+import React from "react";
+import miniSwap from "../../images/icons/mini-swap.png";
+import truncateNum from "../../utils/truncateNum";
 
 export default function Header() {
+
   const dispatch = useAppDispatch();
   const theme = useAppSelector((state) => state.appTheme);
   const clientData = useAppSelector((state) => state.client);
-
+  const navigate = useNavigate();
+  
   function handleConnectWallet() {
-    dispatch(connectWalletAction());
+    // dispatch(connectWalletAction());
+    navigate("/account")
   }
 
   return (
     <>
+      
       <header className="header">
+
         <div className="header-wrap">
+
           <div className="header__items">
+            <a
+              href={"https://ton.org"}
+              target="_blank"
+              rel="noreferrer"
+              className="more-link"
+            >
+              <img src={logo} alt="logo" />
+            </a>
             <NavLink
               id="nav-swap"
               to="/swap"

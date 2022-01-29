@@ -79,7 +79,7 @@ SelectPopup.propTypes = {
   loading: PropTypes.bool,
   onClose: PropTypes.func,
   onSelect: PropTypes.func,
-  tokens: PropTypes.array,
+  tokens: PropTypes.any,
 };
 
 SelectPopup.defaultProps = {

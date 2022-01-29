@@ -100,6 +100,12 @@ export interface Token {
   walletAddress: string;
 }
 
+export interface Extensions {
+  symbol: string,
+  chainID: number,
+  rootAddress: number
+}
+
 export interface Pair {
   exists: boolean;
   pairAddress: string;
@@ -207,7 +213,7 @@ export interface SelectPopupProps {
   loading: boolean;
   onClose: ((event: MouseEvent | TouchEvent) => void) | MouseEventHandler;
   onSelect: (e: MouseEvent | TouchEvent, t: Token) => void;
-  tokens: Token[];
+  tokens: any;
   title: string;
 }
 

@@ -37,6 +37,11 @@
     }
   }
 }
+@media screen and (max-width: 450px) {
+  .search-input {
+    font-size: 14px;
+  }
+}
 @media screen and (max-width: 321px) {
   .search-input {
     font-size: 12px;

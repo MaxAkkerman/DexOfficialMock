@@ -35,7 +35,6 @@
     width: 55%;
     flex-grow: 1;
     margin-right: 15px;
-
     &:focus {
       outline: none;
     }
@@ -129,6 +128,10 @@
   .input {
     padding: 15px;
     border-radius: 18px;
+    &_btn{
+      font-size: 18px;
+    }
+    
 
     &_wrapper:first-of-type {
       margin-bottom: 12px;
@@ -148,8 +151,21 @@
     }
   }
 }
-
-@media screen and (max-width: 769px) {
+@media screen and (max-width: 894px) {
+  .input {
+    &_btn{
+      font-size: 16px;
+    }
+  }
+}
+@media screen and (max-width: 850px) {
+  .input {
+    &_btn{
+      font-size: 13px;
+    }
+  }
+}
+@media screen and (max-width: 528px) {
   .input {
     &_wrapper {
       &:last-of-type {
@@ -157,8 +173,15 @@
       }
     }
 
+    
+  }
+}
+@media screen and (max-width: 769px) {
+  .input {
+    
+
     &_field {
-      width: 100%;
+      width: 60%;
       margin-bottom: 10px;
       margin-right: 0;
     }

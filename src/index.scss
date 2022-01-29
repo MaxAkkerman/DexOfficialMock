@@ -33,9 +33,9 @@ input:focus {
   --invert: invert(1);
   --bg-color: #ffffff;
   --primary-color: #626262;
-  --accent: #3569f0;
+  --accent: #0088CC;
   --success: #49ec9f;
-  --accent-hover: #285bdb;
+  --accent-hover: #007ba7;
   --error: #f03535;
   --error-hover: #d73131;
   --app-bg: url("./images/light-bg.png");
@@ -84,8 +84,8 @@ html[data-theme="dark"] {
   --invert: invert(0);
   --bg-color: #2d2f35;
   --primary-color: #bbbbbb;
-  --accent: #3569f0;
-  --accent-hover: #285bdb;
+  --accent: #0088CC;
+  --accent-hover: #007ba7;
   --app-bg: url("./images/light-bg.png");
   --action-btn-bg: #41444e;
   --icons-color: #ffffff;

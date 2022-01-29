@@ -14,6 +14,7 @@ function* connectWallet() {
     const wallet: SagaReturnType<typeof connectWalletFn> = yield call(
       connectWalletFn,
     );
+    console.log("wallet",wallet)
     yield put(setConnectWalletSucceededAction(wallet));
   } catch (e) {
     yield put(setCreatePairFailedAction(e as string));
