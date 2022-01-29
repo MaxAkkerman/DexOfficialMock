@@ -8,7 +8,7 @@ import { useAppSelector } from "../../hooks/useAppSelector";
 import { iconGenerator } from "../../iconGenerator";
 import { LiquidityItemProps } from "../../types";
 
-function LiquidityItem({ lpToken }: LiquidityItemProps) {
+function LiquidityItem({ onClick, lpToken }: LiquidityItemProps) {
   const navigate = useNavigate();
   const pairsList = useAppSelector((state) => state.pairs);
 
@@ -18,13 +18,13 @@ function LiquidityItem({ lpToken }: LiquidityItemProps) {
   );
 
   function handleClick() {
-    navigate(`/manage/${pair?.pairAddress}`);
+    navigate(`/manage/${lpToken}`);
   }
 
   if (!pair) return <Navigate to="/pool" />;
 
   return (
-    <div className="liquidity-item">
+    <div className="liquidity-item" onClick={onClick}>
       <div>
         <img src={iconGenerator(pair.symbolA)} alt={pair.symbolA} />
         <img src={iconGenerator(pair.symbolB)} alt={pair.symbolB} />

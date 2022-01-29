@@ -345,6 +345,7 @@ declare module "react-outside-click-handler" {}
 
 export interface LiquidityItemProps {
   lpToken: LpToken;
+  onClick: React.MouseEventHandler<HTMLDivElement>;
 }
 
 export interface MainBlockProps {

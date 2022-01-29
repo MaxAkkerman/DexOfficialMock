@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Account from "./components/Account";
 import AddLiquidity from "./components/AddLiquidityPage/AddLiquidity";
 import Header from "./components/Header/Header";
+import Manage from "./components/Manage";
 import NativeLogin from "./components/NativeLogin/NativeLogin";
 import Notifications from "./components/Notifications";
 import Pool from "./components/PoolPage/Pool";
@@ -47,6 +48,7 @@ function App() {
         <Route path="/swap" element={<SwapPage />} />
         <Route path="/add-liquidity" element={<AddLiquidity />} />
         <Route path="/account" element={<Account />} />
+        <Route path="/manage/:lpTokenAddress" element={<Manage />} />
       </Routes>
       <Notifications />
       <WaitingPopup />

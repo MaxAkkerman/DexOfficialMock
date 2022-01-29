@@ -5,13 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { connectWalletAction } from "../../store/actions";
-import { LpToken, Pair } from "../../types";
+import { LpToken } from "../../types";
 import LiquidityItem from "../LiquidityItem/LiquidityItem";
 import MainBlock from "../MainBlock";
-
-interface LpTokenWithPair extends LpToken {
-  pair: Pair;
-}
 
 function Pool() {
   const dispatch = useAppDispatch();
@@ -23,6 +19,10 @@ function Pool() {
 
   function handleConnectWallet() {
     dispatch(connectWalletAction());
+  }
+
+  function handleItemClick(lpToken: LpToken) {
+    navigate(`/manage/${lpToken.walletAddress}`);
   }
 
   return (
@@ -40,7 +40,11 @@ function Pool() {
               {!pairs.length
                 ? "You don’t have liquidity pairs yet"
                 : lpTokens.map((t) => (
-                    <LiquidityItem lpToken={t} key={t.walletAddress} />
+                    <LiquidityItem
+                      lpToken={t}
+                      key={t.walletAddress}
+                      onClick={(e) => handleItemClick(t)}
+                    />
                   ))}
             </div>
           )
