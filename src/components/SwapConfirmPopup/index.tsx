@@ -37,17 +37,6 @@ export default function SwapConfirmPopup() {
   }, [directionPair, values]);
 
   async function handleSwap() {
-    // dispatch(
-    //   makeSwapAction({
-    //     directionPair: directionPair as DirectionPair,
-    //     fromValue: values!.fromValue,
-    //     fromToken: values!.fromToken,
-    //     pair: values!.pair,
-    //     slippage: values!.slippage,
-    //     toValue: values!.toValue,
-    //     toToken: values!.toToken,
-    //   }),
-    // );
     dispatch(
       makeSwapAction({
         directionPair: directionPair as DirectionPair,

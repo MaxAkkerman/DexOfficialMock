@@ -48,9 +48,9 @@ export default function Manage() {
     setpooledTokensB(pooledTokensB);
   }, [poolShare, lpToken, pair]);
 
-  const handleSupplyClick = () => {
-    // dispatch(addLiquidityAction(values as ProvideLiquidityValuesConfirm));
-  };
+  function handleSupplyClick() {
+    navigate(`/add-liquidity?from=${pair?.rootA}&to=${pair?.rootB}`);
+  }
 
   function handleClose() {
     navigate("/pool");

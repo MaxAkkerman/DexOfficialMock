@@ -1,5 +1,5 @@
 import { ClickAwayListener } from "@mui/base";
-import { Portal } from "@mui/material";
+import ModalUnstyled from "@mui/base/ModalUnstyled";
 import PropTypes from "prop-types";
 import React, { MouseEventHandler, useMemo, useState } from "react";
 
@@ -37,7 +37,7 @@ export default function SelectPopup({
   }
 
   return (
-    <Portal>
+    <ModalUnstyled open onClose={onClose}>
       <div className={classes["select-wrapper"]}>
         <ClickAwayListener
           onClickAway={onClose as (event: MouseEvent | TouchEvent) => void}
@@ -71,7 +71,7 @@ export default function SelectPopup({
           />
         </ClickAwayListener>
       </div>
-    </Portal>
+    </ModalUnstyled>
   );
 }
 
