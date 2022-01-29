@@ -28,12 +28,17 @@ function App() {
   const appTheme = useAppSelector((state) => state.appTheme);
 
   useEffect(() => {
-    const theme =
-      localStorage.getItem("appTheme") === null
-        ? "light"
-        : localStorage.getItem("appTheme");
-    if (appTheme !== theme) dispatch(changeThemeAction(theme as ThemeVariant));
-  }, [dispatch, appTheme]);
+    dispatch(
+      changeThemeAction(
+        (localStorage.getItem("appTheme") as ThemeVariant) || "light",
+      ),
+    );
+  }, [dispatch]);
+
+  useEffect(() => {
+    document.querySelector("html")?.setAttribute("data-theme", appTheme);
+    localStorage.setItem("appTheme", appTheme);
+  }, [appTheme]);
 
   useEffect(() => {
     dispatch(requestTokensFetchAction());
