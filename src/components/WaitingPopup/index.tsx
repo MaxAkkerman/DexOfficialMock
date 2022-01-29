@@ -24,7 +24,7 @@ export default function WaitingPopup() {
       <MainBlock
         content={
           <div className="popup-content">
-            <Loader />
+            <Loader className="popup-circle" />
             <p className="popup-loading-text">
               {title || "Sending message to blockchain"}
             </p>
