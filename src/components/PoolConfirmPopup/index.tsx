@@ -18,7 +18,7 @@ function PoolConfirmPopup() {
      */
   }
 
-  if (!values) return <Navigate to="/pool" />;
+  if (!values) return null;
 
   return (
     <div className="popup-wrapper confirm-popup">

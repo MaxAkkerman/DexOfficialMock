@@ -2,13 +2,14 @@ import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import Account from "./components/Account";
-import AddLiquidity from "./components/AddLiquidityPage/AddLiquidity";
+import AddLiquidity from "./components/AddLiquidityPage";
 import Header from "./components/Header/Header";
 import Manage from "./components/Manage";
-import NativeLogin from "./components/NativeLogin/NativeLogin";
 import Notifications from "./components/Notifications";
+import PoolConfirmPopup from "./components/PoolConfirmPopup";
 import Pool from "./components/PoolPage/Pool";
 import RemoveLiquidityPage from "./components/RemoveLiquidityPage";
+import ReturnLiquidConfirmPopup from "./components/ReturnLiquidConfirmPopup";
 import SwapConfirmPopup from "./components/SwapConfirmPopup";
 import SwapPage from "./components/SwapPage";
 import WaitingPopup from "./components/WaitingPopup";
@@ -44,7 +45,6 @@ function App() {
     <>
       <Header />
       <Routes>
-        <Route path="/native-login" element={<NativeLogin />} />
         <Route path="/pool" element={<Pool />} />
         <Route path="/swap" element={<SwapPage />} />
         <Route path="/add-liquidity" element={<AddLiquidity />} />
@@ -58,6 +58,8 @@ function App() {
       <Notifications />
       <WaitingPopup />
       <SwapConfirmPopup />
+      <ReturnLiquidConfirmPopup />
+      <PoolConfirmPopup />
     </>
   );
 }

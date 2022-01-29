@@ -1,4 +1,4 @@
-import "./AddLiquidity.scss";
+import "./index.scss";
 
 import { useFormik } from "formik";
 import compact from "lodash/compact";

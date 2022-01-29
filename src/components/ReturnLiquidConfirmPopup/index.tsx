@@ -19,7 +19,7 @@ function ReturnLiquidConfirmPopup() {
 
   function hanldeClose() {}
 
-  if (!values) return <Navigate to="/pool" />;
+  if (!values) return null;
 
   return (
     <div className="popup-wrapper confirm-popup">
@@ -65,10 +65,7 @@ function ReturnLiquidConfirmPopup() {
               </div>
             </div>
             {/*<p className="confirm-text">Output is estimated. If the price changes by more than 0.5% your transaction will revert</p>*/}
-            <button
-              className="btn popup-btn"
-              onClick={() => handleRemoveConfirm()}
-            >
+            <button className="btn popup-btn" onClick={handleRemoveConfirm}>
               Confirm Remove
             </button>
           </>
