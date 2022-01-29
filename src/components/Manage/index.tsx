@@ -89,7 +89,9 @@ export default function Manage() {
             {lpToken.balance !== 0 ? (
               <div className="manage-remove-link">
                 <span
-                  onClick={() => navigate(`/manage/remove/${pair.pairAddress}`)}
+                  onClick={() =>
+                    navigate(`/remove-liquidity/${lpToken.walletAddress}`)
+                  }
                 >
                   Remove
                 </span>

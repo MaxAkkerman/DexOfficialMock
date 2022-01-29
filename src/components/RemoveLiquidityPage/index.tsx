@@ -1,16 +1,30 @@
 import "./index.scss";
 
-import React, { useEffect, useState } from "react";
+import find from "lodash/find";
+import React, { useEffect, useMemo, useState } from "react";
 import Slider from "react-rangeslider";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 
 import MainBlock from "../../components/MainBlock";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { iconGenerator } from "../../iconGenerator";
 
-function Manage() {
-  const values = useAppSelector((state) => state.removeLiquidityConfirmValues);
+export default function RemoveLiquidityPage() {
+  const params = useParams();
+  const navigate = useNavigate();
+
+  const lpTokens = useAppSelector((state) => state.lpTokens);
+  const pairs = useAppSelector((state) => state.pairs);
+
+  const lpToken = useMemo(
+    () => find(lpTokens, { walletAddress: params.lpTokenAddress }),
+    [lpTokens, params],
+  );
+  const pair = useMemo(
+    () => find(pairs, { pairAddress: lpToken?.pairAddress }),
+    [pairs, lpToken],
+  );
 
   const [rangeValue, setRangeValue] = useState(0);
   const [percent, setPercent] = useState(0);
@@ -21,32 +35,32 @@ function Manage() {
   const [showReturnLiqidPopup, setshowReturnLiqidPopup] = useState(false);
 
   useEffect(() => {
-    if (!values) return;
+    if (!lpToken || !pair) return;
 
-    const total = values.pair.totalSupply;
-    setPercent((values.lpToken.balance * 100) / total);
-  }, [values]);
+    const total = pair.totalSupply;
+    setPercent((lpToken.balance * 100) / total);
+  }, [lpToken, pair]);
 
   const handleChange = (value: number) => {
-    if (!values) return;
+    if (!pair) return;
 
     setRangeValue(value);
-    setQtyA((((values.pair.reserveA * percent) / 100) * value) / 100);
-    setQtyB((((values.pair.reserveB * percent) / 100) * value) / 100);
+    setQtyA((((pair.reserveA * percent) / 100) * value) / 100);
+    setQtyB((((pair.reserveB * percent) / 100) * value) / 100);
   };
 
   const handleRemove = async () => {
     setshowReturnLiqidPopup(true);
   };
 
-  if (!values) return <Navigate to="/pool" />;
+  if (!lpToken || !pair) return <Navigate to="/pool" />;
 
   return (
     <div className="container">
       <MainBlock
         smallTitle={false}
         title={
-          <Link to={"/pool"} className="pool-back">
+          <Link to={`/manage/${lpToken.walletAddress}`} className="pool-back">
             <svg
               width="12"
               height="19"
@@ -109,11 +123,8 @@ function Manage() {
                   : parseFloat(qtyA.toFixed(4))}
               </div>
               <div className="manage-token-symbol">
-                <img
-                  src={iconGenerator(values.pair.symbolA)}
-                  alt={values.pair.symbolA}
-                />
-                {values.pair.symbolA}
+                <img src={iconGenerator(pair.symbolA)} alt={pair.symbolA} />
+                {pair.symbolA}
               </div>
             </div>
             <div className="manage-token-wrapper">
@@ -123,27 +134,24 @@ function Manage() {
                   : parseFloat(qtyB.toFixed(4))}
               </div>
               <div className="manage-token-symbol">
-                <img
-                  src={iconGenerator(values.pair.symbolB)}
-                  alt={values.pair.symbolB}
-                />
-                {values.pair.symbolB}
+                <img src={iconGenerator(pair.symbolB)} alt={pair.symbolB} />
+                {pair.symbolB}
               </div>
             </div>
             <p className="manage-subtitle">Price</p>
             <p className="manage-text">
-              1 {values.pair.symbolA} ={" "}
-              {values.pair.rateAB < 0.0001
-                ? parseFloat(values.pair.rateAB.toFixed(8))
-                : parseFloat(values.pair.rateAB.toFixed(4))}{" "}
-              {values.pair.symbolB}
+              1 {pair.symbolA} ={" "}
+              {pair.rateAB < 0.0001
+                ? parseFloat(pair.rateAB.toFixed(8))
+                : parseFloat(pair.rateAB.toFixed(4))}{" "}
+              {pair.symbolB}
             </p>
             <p className="manage-text">
-              1 {values.pair.symbolB} ={" "}
-              {values.pair.rateBA < 0.0001
-                ? parseFloat(values.pair.rateBA.toFixed(8))
-                : parseFloat(values.pair.rateBA.toFixed(4))}{" "}
-              {values.pair.symbolA}
+              1 {pair.symbolB} ={" "}
+              {pair.rateBA < 0.0001
+                ? parseFloat(pair.rateBA.toFixed(8))
+                : parseFloat(pair.rateBA.toFixed(4))}{" "}
+              {pair.symbolA}
             </p>
             <button
               onClick={rangeValue !== 0 ? handleRemove : () => {}}
@@ -161,5 +169,3 @@ function Manage() {
     </div>
   );
 }
-
-export default Manage;

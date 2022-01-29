@@ -8,6 +8,7 @@ import Manage from "./components/Manage";
 import NativeLogin from "./components/NativeLogin/NativeLogin";
 import Notifications from "./components/Notifications";
 import Pool from "./components/PoolPage/Pool";
+import RemoveLiquidityPage from "./components/RemoveLiquidityPage";
 import SwapConfirmPopup from "./components/SwapConfirmPopup";
 import SwapPage from "./components/SwapPage";
 import WaitingPopup from "./components/WaitingPopup";
@@ -47,6 +48,10 @@ function App() {
         <Route path="/pool" element={<Pool />} />
         <Route path="/swap" element={<SwapPage />} />
         <Route path="/add-liquidity" element={<AddLiquidity />} />
+        <Route
+          path="/remove-liquidity/:lpTokenAddress"
+          element={<RemoveLiquidityPage />}
+        />
         <Route path="/account" element={<Account />} />
         <Route path="/manage/:lpTokenAddress" element={<Manage />} />
       </Routes>

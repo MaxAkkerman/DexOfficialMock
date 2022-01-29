@@ -28,6 +28,7 @@ function AddLiquidity() {
   const [params] = useSearchParams();
 
   const tokens = useAppSelector((state) => state.tokens);
+  const lpTokens = useAppSelector((state) => state.lpTokens);
   const walletIsConnected = useAppSelector((state) => state.client);
   const pairs = useAppSelector((state) => state.pairs);
 
@@ -61,6 +62,11 @@ function AddLiquidity() {
 
   const [totalLPs, settotalLPs] = useState(0);
   const [poolSharePercentage, setpoolSharePercentage] = useState(0);
+
+  const lpToken = useMemo(
+    () => find(lpTokens, { pairAddress: values.pair?.pairAddress }),
+    [values.pair, lpTokens],
+  );
 
   // Find the pair
   useEffect(() => {
@@ -206,7 +212,7 @@ function AddLiquidity() {
       <MainBlock
         smallTitle={false}
         title={
-          <Link to="/pool" className="pool-back">
+          <Link to={`/manage/${lpToken?.walletAddress}`} className="pool-back">
             <svg
               width="12"
               height="19"
