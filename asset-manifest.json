@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/defispace-contest-cra/static/css/main.81c5e8cd.css",
+    "main.js": "/defispace-contest-cra/static/js/main.a533dc0b.js",
+    "static/media/light-bg.png": "/defispace-contest-cra/static/media/light-bg.5dda4dced3c50fb512ca.png",
+    "static/media/eth.png": "/defispace-contest-cra/static/media/eth.856c26cbea03f8d8ba05.png",
+    "static/media/Gilroy-Medium.woff": "/defispace-contest-cra/static/media/Gilroy-Medium.2bc7f5d7ea77ee1bddb3.woff",
+    "static/media/Gilroy-Bold.woff": "/defispace-contest-cra/static/media/Gilroy-Bold.5fb38b9fa452b5814397.woff",
+    "static/media/Gilroy-Regular.woff": "/defispace-contest-cra/static/media/Gilroy-Regular.31d54a4b841c0e438f13.woff",
+    "static/media/tonNew.svg": "/defispace-contest-cra/static/media/tonNew.3ec632cc3ab74846d7199c949287a935.svg",
+    "static/media/Vector.svg": "/defispace-contest-cra/static/media/Vector.cf4803ce72ab28c1fae21d30143d1687.svg",
+    "static/media/default.svg": "/defispace-contest-cra/static/media/default.25ef3a14f2de022813c44f4d54885890.svg",
+    "static/media/phantom.svg": "/defispace-contest-cra/static/media/phantom.20719cb0c32818e1e3b44cbf053a518d.svg",
+    "static/media/TONold.svg": "/defispace-contest-cra/static/media/TONold.06f491487328de8e7fd81d835cfda442.svg",
+    "static/media/polygon.svg": "/defispace-contest-cra/static/media/polygon.da7b877d41122a55de4a43760bb4c8e5.svg",
+    "static/media/wBTC.svg": "/defispace-contest-cra/static/media/wBTC.b7dde339c35af386377ecdc1023e80a7.svg",
+    "static/media/question.svg": "/defispace-contest-cra/static/media/question.27e489124f5997cf6188725e5b44cc2a.svg",
+    "static/media/USDC.svg": "/defispace-contest-cra/static/media/USDC.ff9ec56ad7bdc0f3e58e3e13fffd8e15.svg",
+    "static/media/BNB.svg": "/defispace-contest-cra/static/media/BNB.45a218875c7444d3a5903987b33c1fcd.svg",
+    "index.html": "/defispace-contest-cra/index.html",
+    "static/media/wUSDT.svg": "/defispace-contest-cra/static/media/wUSDT.0de21bf496e8428f05bf28029caa4965.svg",
+    "static/media/DAI.svg": "/defispace-contest-cra/static/media/DAI.b73b696693dcd144056b89329a461e9b.svg",
+    "static/media/wETH.svg": "/defispace-contest-cra/static/media/wETH.c7ce3cfb39606d32f28c0c675fb981da.svg",
+    "static/media/bsc.svg": "/defispace-contest-cra/static/media/bsc.89766970ea5ce541be3110dfe47f65e6.svg",
+    "main.81c5e8cd.css.map": "/defispace-contest-cra/static/css/main.81c5e8cd.css.map",
+    "main.a533dc0b.js.map": "/defispace-contest-cra/static/js/main.a533dc0b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.81c5e8cd.css",
+    "static/js/main.a533dc0b.js"
+  ]
+}
